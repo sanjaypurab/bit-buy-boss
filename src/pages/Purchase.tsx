@@ -25,7 +25,7 @@ const Purchase = () => {
   const [service, setService] = useState<Service | null>(null);
   const [loading, setLoading] = useState(true);
   const [orderCreated, setOrderCreated] = useState(false);
-  const [btcAddress] = useState('bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh'); // Example BTC address
+  const [btcAddress] = useState('199tJyjqiKMJdTPN21xHRd5phxE6tDNW14'); // Example BTC address
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
