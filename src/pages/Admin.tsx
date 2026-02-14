@@ -30,6 +30,7 @@ interface Service {
   description: string;
   price: number;
   btc_price: number | null;
+  btc_address: string | null;
   is_active: boolean;
 }
 
@@ -46,6 +47,7 @@ const Admin = () => {
     description: '',
     price: '',
     btc_price: '',
+    btc_address: '',
     features: '',
   });
 
@@ -146,6 +148,7 @@ const Admin = () => {
         description: newService.description,
         price: parseFloat(newService.price),
         btc_price: newService.btc_price ? parseFloat(newService.btc_price) : null,
+        btc_address: newService.btc_address || null,
         features,
         is_active: true,
       });
@@ -157,7 +160,7 @@ const Admin = () => {
         description: 'Service added successfully',
       });
       
-      setNewService({ name: '', description: '', price: '', btc_price: '', features: '' });
+      setNewService({ name: '', description: '', price: '', btc_price: '', btc_address: '', features: '' });
       setShowAddService(false);
       fetchServices();
     } catch (error: any) {
@@ -282,6 +285,16 @@ const Admin = () => {
                           onChange={(e) => setNewService({ ...newService, btc_price: e.target.value })}
                         />
                       </div>
+                    </div>
+                    <div>
+                      <Label htmlFor="btc_address">BTC Payment Address</Label>
+                      <Input
+                        id="btc_address"
+                        value={newService.btc_address}
+                        onChange={(e) => setNewService({ ...newService, btc_address: e.target.value })}
+                        placeholder="e.g. 199tJyjqiKMJdTPN21xHRd5phxE6tDNW14"
+                        className="font-mono"
+                      />
                     </div>
                     <div>
                       <Label htmlFor="features">Features (one per line)</Label>
