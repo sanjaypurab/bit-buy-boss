@@ -15,6 +15,7 @@ interface Service {
   description: string;
   price: number;
   btc_price: number | null;
+  btc_address: string | null;
 }
 
 const Purchase = () => {
@@ -25,7 +26,6 @@ const Purchase = () => {
   const [service, setService] = useState<Service | null>(null);
   const [loading, setLoading] = useState(true);
   const [orderCreated, setOrderCreated] = useState(false);
-  const [btcAddress] = useState('199tJyjqiKMJdTPN21xHRd5phxE6tDNW14'); // Example BTC address
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
@@ -67,7 +67,7 @@ const Purchase = () => {
         .insert({
           user_id: user.id,
           service_id: service.id,
-          btc_address: btcAddress,
+          btc_address: service.btc_address,
           btc_amount: service.btc_price,
           status: 'pending',
         });
@@ -89,7 +89,8 @@ const Purchase = () => {
   };
 
   const copyAddress = () => {
-    navigator.clipboard.writeText(btcAddress);
+    if (!service?.btc_address) return;
+    navigator.clipboard.writeText(service.btc_address);
     setCopied(true);
     toast({
       title: 'Copied',
@@ -142,7 +143,7 @@ const Purchase = () => {
                   <div className="text-center space-y-4">
                     <h3 className="font-semibold text-lg">Scan QR Code</h3>
                     <div className="inline-block p-4 bg-white rounded-lg">
-                      <QRCodeSVG value={btcAddress} size={200} />
+                      <QRCodeSVG value={service.btc_address || ''} size={200} />
                     </div>
                   </div>
 
@@ -151,7 +152,7 @@ const Purchase = () => {
                     <div className="flex gap-2">
                       <input
                         type="text"
-                        value={btcAddress}
+                        value={service.btc_address || ''}
                         readOnly
                         className="flex-1 px-3 py-2 border rounded-md bg-muted font-mono text-sm"
                       />

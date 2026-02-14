@@ -63,6 +63,7 @@ export type Database = {
       }
       services: {
         Row: {
+          btc_address: string | null
           btc_price: number | null
           created_at: string | null
           description: string
@@ -74,6 +75,7 @@ export type Database = {
           updated_at: string | null
         }
         Insert: {
+          btc_address?: string | null
           btc_price?: number | null
           created_at?: string | null
           description: string
@@ -85,6 +87,7 @@ export type Database = {
           updated_at?: string | null
         }
         Update: {
+          btc_address?: string | null
           btc_price?: number | null
           created_at?: string | null
           description?: string
