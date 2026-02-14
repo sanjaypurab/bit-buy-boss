@@ -11,7 +11,7 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import Navbar from '@/components/Navbar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Plus, Loader2 } from 'lucide-react';
+import { Plus, Loader2, Pencil, X, Save } from 'lucide-react';
 
 interface Order {
   id: string;
@@ -32,6 +32,7 @@ interface Service {
   btc_price: number | null;
   btc_address: string | null;
   is_active: boolean;
+  features: any;
 }
 
 const Admin = () => {
@@ -42,6 +43,16 @@ const Admin = () => {
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAddService, setShowAddService] = useState(false);
+  const [editingService, setEditingService] = useState<string | null>(null);
+  const [editForm, setEditForm] = useState({
+    name: '',
+    description: '',
+    price: '',
+    btc_price: '',
+    btc_address: '',
+    features: '',
+    is_active: true,
+  });
   const [newService, setNewService] = useState({
     name: '',
     description: '',
@@ -169,6 +180,49 @@ const Admin = () => {
         description: error.message,
         variant: 'destructive',
       });
+    }
+  };
+
+  const startEditing = (service: Service) => {
+    setEditingService(service.id);
+    setEditForm({
+      name: service.name,
+      description: service.description,
+      price: String(service.price),
+      btc_price: service.btc_price ? String(service.btc_price) : '',
+      btc_address: service.btc_address || '',
+      features: Array.isArray(service.features) ? service.features.join('\n') : '',
+      is_active: service.is_active,
+    });
+  };
+
+  const saveEdit = async (serviceId: string) => {
+    try {
+      const features = editForm.features
+        .split('\n')
+        .filter(f => f.trim())
+        .map(f => f.trim());
+
+      const { error } = await supabase
+        .from('services')
+        .update({
+          name: editForm.name,
+          description: editForm.description,
+          price: parseFloat(editForm.price),
+          btc_price: editForm.btc_price ? parseFloat(editForm.btc_price) : null,
+          btc_address: editForm.btc_address || null,
+          features,
+          is_active: editForm.is_active,
+        })
+        .eq('id', serviceId);
+
+      if (error) throw error;
+
+      toast({ title: 'Success', description: 'Service updated successfully' });
+      setEditingService(null);
+      fetchServices();
+    } catch (error: any) {
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
     }
   };
 
@@ -315,15 +369,74 @@ const Admin = () => {
                   <Card key={service.id}>
                     <CardHeader>
                       <div className="flex items-center justify-between">
-                        <CardTitle>{service.name}</CardTitle>
-                        <Badge variant={service.is_active ? 'default' : 'secondary'}>
-                          {service.is_active ? 'Active' : 'Inactive'}
-                        </Badge>
+                        <CardTitle>{editingService === service.id ? 'Edit Service' : service.name}</CardTitle>
+                        <div className="flex items-center gap-2">
+                          <Badge variant={service.is_active ? 'default' : 'secondary'}>
+                            {service.is_active ? 'Active' : 'Inactive'}
+                          </Badge>
+                          {editingService === service.id ? (
+                            <>
+                              <Button size="icon" variant="ghost" onClick={() => saveEdit(service.id)}>
+                                <Save className="h-4 w-4" />
+                              </Button>
+                              <Button size="icon" variant="ghost" onClick={() => setEditingService(null)}>
+                                <X className="h-4 w-4" />
+                              </Button>
+                            </>
+                          ) : (
+                            <Button size="icon" variant="ghost" onClick={() => startEditing(service)}>
+                              <Pencil className="h-4 w-4" />
+                            </Button>
+                          )}
+                        </div>
                       </div>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-sm text-muted-foreground mb-2">{service.description}</p>
-                      <div className="text-lg font-bold">${service.price}</div>
+                      {editingService === service.id ? (
+                        <div className="space-y-4">
+                          <div>
+                            <Label>Service Name</Label>
+                            <Input value={editForm.name} onChange={(e) => setEditForm({ ...editForm, name: e.target.value })} />
+                          </div>
+                          <div>
+                            <Label>Description</Label>
+                            <Textarea value={editForm.description} onChange={(e) => setEditForm({ ...editForm, description: e.target.value })} />
+                          </div>
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <Label>Price (USD)</Label>
+                              <Input type="number" step="0.01" value={editForm.price} onChange={(e) => setEditForm({ ...editForm, price: e.target.value })} />
+                            </div>
+                            <div>
+                              <Label>BTC Price</Label>
+                              <Input type="number" step="0.00000001" value={editForm.btc_price} onChange={(e) => setEditForm({ ...editForm, btc_price: e.target.value })} />
+                            </div>
+                          </div>
+                          <div>
+                            <Label>BTC Payment Address</Label>
+                            <Input value={editForm.btc_address} onChange={(e) => setEditForm({ ...editForm, btc_address: e.target.value })} placeholder="e.g. 199tJyjqiKMJdTPN21xHRd5phxE6tDNW14" className="font-mono" />
+                          </div>
+                          <div>
+                            <Label>Features (one per line)</Label>
+                            <Textarea value={editForm.features} onChange={(e) => setEditForm({ ...editForm, features: e.target.value })} />
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Label>Active</Label>
+                            <input type="checkbox" checked={editForm.is_active} onChange={(e) => setEditForm({ ...editForm, is_active: e.target.checked })} />
+                          </div>
+                        </div>
+                      ) : (
+                        <>
+                          <p className="text-sm text-muted-foreground mb-2">{service.description}</p>
+                          <div className="flex items-center gap-4">
+                            <div className="text-lg font-bold">${service.price}</div>
+                            {service.btc_price && <div className="text-sm text-muted-foreground">{service.btc_price} BTC</div>}
+                          </div>
+                          {service.btc_address && (
+                            <div className="mt-2 text-xs font-mono text-muted-foreground truncate">BTC: {service.btc_address}</div>
+                          )}
+                        </>
+                      )}
                     </CardContent>
                   </Card>
                 ))}
