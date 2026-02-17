@@ -61,6 +61,33 @@ export type Database = {
           },
         ]
       }
+      profiles: {
+        Row: {
+          banned: boolean
+          created_at: string | null
+          email: string | null
+          id: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          banned?: boolean
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          banned?: boolean
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       services: {
         Row: {
           btc_address: string | null
