@@ -1,73 +1,92 @@
-# Welcome to your Lovable project
+# DigiHub — Bitcoin-Native Digital Services Marketplace
 
-## Project info
+Premium digital services purchasable with Bitcoin. No banks, no middlemen, just results.
 
-**URL**: https://lovable.dev/projects/bfe5124d-daa5-4727-a6e3-a915fb1a9f64
+## ✅ What We Have (Done)
 
-## How can I edit this code?
+| Feature | Status | Notes |
+|---------|--------|-------|
+| **Landing Page** | ✅ | Hero, How It Works, Features, CTA, footer |
+| **Auth (Email/Password)** | ✅ | Sign up, sign in, email verification, session mgmt |
+| **Role-Based Access** | ✅ | `user_roles` table with admin/user enum, `isAdmin` context |
+| **Services Catalog** | ✅ | Dynamic from DB, shows price + BTC price + features |
+| **BTC Purchase Flow** | ✅ | QR code generation, copy-to-clipboard, order creation |
+| **BTC Address per Service** | ✅ | Configurable in DB, set by admins per service |
+| **User Dashboard** | ✅ | Order history with status badges |
+| **Admin Panel** | ✅ | View pending orders, confirm payments, CRUD services |
+| **Service Editing** | ✅ | Inline edit name, price, BTC address, features, active toggle |
+| **RLS Policies** | ✅ | Orders scoped to user, admin role checks |
+| **Responsive Navbar** | ✅ | Conditional links for auth/admin state |
 
-There are several ways of editing your application.
+## 🚧 What We Need to Launch
 
-**Use Lovable**
+### Critical (Must Have)
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/bfe5124d-daa5-4727-a6e3-a915fb1a9f64) and start prompting.
+- [ ] **SEO meta tags** — `index.html` still has placeholder title ("bit-buy-boss") and generic OG tags
+- [ ] **Seed at least one service** — Catalog is empty; need at least one live service with a real BTC address
+- [ ] **Mobile-responsive navbar** — No hamburger menu; nav breaks on small screens
+- [ ] **Error/empty states** — Purchase page shows nothing if service has no BTC address configured
 
-Changes made via Lovable will be committed automatically to this repo.
+### Important (Should Have)
 
-**Use your preferred IDE**
+- [ ] **Email notifications** — No notifications when order status changes (payment confirmed, etc.)
+- [ ] **Order status lifecycle** — Only `pending` → `confirmed` exists; add `completed`, `cancelled` flows
+- [ ] **Terms of Service / Privacy Policy** — Required for any public-facing product
+- [ ] **Leaked password protection** — Currently disabled in auth config (security warning)
+- [ ] **Admin: delete services** — Can edit but not remove services
+- [ ] **Admin: view all orders** — Currently filtered to pending only; add tabs for all statuses
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Nice to Have
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- [ ] **Custom domain** — Currently on lovable.app preview URL
+- [ ] **Dark/light mode toggle** — Theme tokens exist but no user-facing toggle
+- [ ] **Analytics dashboard** — Order volume, revenue tracking for admins
+- [ ] **Multiple payment methods** — Lightning Network, on-chain options
+- [ ] **Rate limiting** — No protection against order spam
 
-Follow these steps:
+## Tech Stack
+
+- **Frontend:** React 18, TypeScript, Vite, Tailwind CSS, shadcn/ui
+- **Backend:** Lovable Cloud (Supabase) — Auth, Postgres, RLS
+- **Payments:** Bitcoin (QR code via `qrcode.react`, manual admin confirmation)
+- **State:** React Query, React Context (Auth)
+
+## Project Structure
+
+```
+src/
+├── components/       # Navbar, shadcn/ui primitives
+├── contexts/         # AuthContext (user, session, isAdmin)
+├── hooks/            # use-toast, use-mobile
+├── integrations/     # Supabase client & types (auto-generated)
+├── pages/
+│   ├── Index.tsx     # Landing page
+│   ├── Auth.tsx      # Login / Sign up
+│   ├── Services.tsx  # Service catalog
+│   ├── Purchase.tsx  # BTC payment flow
+│   ├── Dashboard.tsx # User order history
+│   ├── Admin.tsx     # Admin panel (orders + services CRUD)
+│   └── NotFound.tsx  # 404
+└── lib/              # Utilities
+```
+
+## Database Tables
+
+| Table | Purpose |
+|-------|---------|
+| `services` | Service catalog (name, price, btc_price, btc_address, features, is_active) |
+| `orders` | Purchase records (user_id, service_id, status, btc_amount, btc_address) |
+| `user_roles` | Role assignments (user_id, role: admin/user) |
+
+## Getting Started
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
 git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
 cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
 npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## Deployment
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/bfe5124d-daa5-4727-a6e3-a915fb1a9f64) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Open [Lovable](https://lovable.dev/projects/bfe5124d-daa5-4727-a6e3-a915fb1a9f64) and click **Share → Publish**.
