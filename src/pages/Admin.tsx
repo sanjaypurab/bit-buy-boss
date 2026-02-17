@@ -23,6 +23,7 @@ interface Order {
     name: string;
   };
   user_id: string;
+  user_email?: string | null;
 }
 
 interface Service {
@@ -93,7 +94,21 @@ const Admin = () => {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setOrders(data || []);
+
+      // Fetch user emails from profiles
+      const userIds = [...new Set((data || []).map(o => o.user_id))];
+      const { data: profiles } = await supabase
+        .from('profiles')
+        .select('user_id, email')
+        .in('user_id', userIds);
+
+      const emailMap = new Map(profiles?.map(p => [p.user_id, p.email]) || []);
+      const ordersWithEmail = (data || []).map(o => ({
+        ...o,
+        user_email: emailMap.get(o.user_id) || null,
+      }));
+
+      setOrders(ordersWithEmail);
     } catch (error: any) {
       toast({
         title: 'Error',
@@ -272,6 +287,10 @@ const Admin = () => {
                       </CardHeader>
                       <CardContent>
                         <div className="space-y-3">
+                          <div className="text-sm">
+                            <span className="text-muted-foreground">User: </span>
+                            {order.user_email || order.user_id}
+                          </div>
                           <div className="text-sm">
                             <span className="text-muted-foreground">Date: </span>
                             {new Date(order.created_at).toLocaleString()}
