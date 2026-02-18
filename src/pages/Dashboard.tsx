@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import Navbar from '@/components/Navbar';
 import { Loader2, Bitcoin } from 'lucide-react';
+import UserMessages from '@/components/UserMessages';
 
 interface Order {
   id: string;
@@ -143,6 +144,11 @@ const Dashboard = () => {
               ))}
             </div>
           )}
+
+          {/* Messages Section */}
+          <div className="mt-10">
+            <UserMessages />
+          </div>
         </div>
       </div>
     </div>
