@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
-import { Shield, LogOut, LayoutDashboard, ShoppingBag, Menu } from 'lucide-react';
+import { Shield, LogOut, LayoutDashboard, ShoppingBag, Menu, User } from 'lucide-react';
 import {
   Sheet,
   SheetContent,
@@ -44,6 +44,12 @@ const Navbar = () => {
                 </Button>
               </Link>
             )}
+            <Link to="/profile" onClick={close}>
+              <Button variant="ghost" className="gap-2 w-full justify-start">
+                <User className="h-4 w-4" />
+                Profile
+              </Button>
+            </Link>
             <Button
               variant="ghost"
               onClick={() => { signOut(); close(); }}
