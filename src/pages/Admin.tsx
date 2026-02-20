@@ -14,6 +14,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Plus, Loader2, Pencil, X, Save } from 'lucide-react';
 import AdminUsersTab from '@/components/admin/AdminUsersTab';
 import AdminMessagesTab from '@/components/admin/AdminMessagesTab';
+import AdminContentTab from '@/components/admin/AdminContentTab';
 
 interface Order {
   id: string;
@@ -267,6 +268,7 @@ const Admin = () => {
               <TabsTrigger value="services">Services</TabsTrigger>
               <TabsTrigger value="users">Users</TabsTrigger>
               <TabsTrigger value="messages">Messages</TabsTrigger>
+              <TabsTrigger value="content">Homepage</TabsTrigger>
             </TabsList>
 
             <TabsContent value="orders" className="space-y-4">
@@ -472,6 +474,10 @@ const Admin = () => {
 
             <TabsContent value="messages">
               <AdminMessagesTab />
+            </TabsContent>
+
+            <TabsContent value="content">
+              <AdminContentTab />
             </TabsContent>
           </Tabs>
         </div>
