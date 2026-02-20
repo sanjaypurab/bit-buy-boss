@@ -73,7 +73,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 font-bold text-xl">
           <Shield className="h-6 w-6 text-primary" />
-          <span>DigiHub</span>
+          <span>BitBuyBoss</span>
         </Link>
 
         {/* Desktop */}
