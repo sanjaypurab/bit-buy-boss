@@ -2,11 +2,14 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import { Shield, Zap, Lock, Bitcoin, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { useSiteContent } from '@/hooks/useSiteContent';
 
 const Index = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { content: c, loading } = useSiteContent();
 
   const features = [
     {
@@ -39,30 +42,29 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background dark">
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-40"
-          style={{ background: 'var(--gradient-hero)' }}
-        />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-20%,hsl(var(--primary)/0.15),transparent)]" />
-        <div className="container relative mx-auto px-4 py-28 lg:py-40">
+      <section className="relative overflow-hidden border-b border-border">
+        {/* Ambient glow */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_-10%,hsl(var(--primary)/0.2),transparent)]" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] rounded-full bg-primary/5 blur-3xl" />
+
+        <div className="container relative mx-auto px-4 py-28 lg:py-44">
           <div className="max-w-3xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full border bg-card/60 backdrop-blur-sm text-sm font-medium text-muted-foreground">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full border border-border bg-muted/50 backdrop-blur-sm text-sm font-medium text-muted-foreground">
               <Bitcoin className="h-4 w-4 text-primary" />
-              Bitcoin-native digital services
+              {c.hero_badge || 'Bitcoin-native digital services'}
             </div>
-            <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[1.1]">
-              Digital services,
-              <span className="block bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                paid your way.
+            <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[1.08]">
+              {c.hero_title_line1 || 'Digital services,'}
+              <span className="block mt-1 bg-gradient-to-r from-primary via-primary to-accent bg-clip-text text-transparent">
+                {c.hero_title_line2 || 'paid your way.'}
               </span>
             </h1>
             <p className="text-lg lg:text-xl text-muted-foreground mb-10 max-w-xl mx-auto leading-relaxed">
-              Premium email marketing, custom websites, and more — all purchasable with Bitcoin. No banks. No middlemen. Just results.
+              {c.hero_subtitle || 'Premium email marketing, custom websites, and more — all purchasable with Bitcoin. No banks. No middlemen. Just results.'}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               {user ? (
@@ -70,7 +72,7 @@ const Index = () => {
                   <Button size="lg" className="gap-2 text-base px-8" onClick={() => navigate('/services')}>
                     Browse Services <ArrowRight className="h-4 w-4" />
                   </Button>
-                  <Button size="lg" variant="outline" className="text-base px-8" onClick={() => navigate('/dashboard')}>
+                  <Button size="lg" variant="outline" className="text-base px-8 border-border" onClick={() => navigate('/dashboard')}>
                     My Dashboard
                   </Button>
                 </>
@@ -79,7 +81,7 @@ const Index = () => {
                   <Button size="lg" className="gap-2 text-base px-8" onClick={() => navigate('/auth')}>
                     Get Started Free <ArrowRight className="h-4 w-4" />
                   </Button>
-                  <Button size="lg" variant="outline" className="text-base px-8" onClick={() => navigate('/services')}>
+                  <Button size="lg" variant="outline" className="text-base px-8 border-border" onClick={() => navigate('/services')}>
                     View Services
                   </Button>
                 </>
@@ -90,7 +92,7 @@ const Index = () => {
       </section>
 
       {/* How It Works */}
-      <section className="py-20 lg:py-28 border-t bg-muted/30">
+      <section className="py-20 lg:py-28 border-b border-border">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold mb-4">How It Works</h2>
@@ -100,8 +102,8 @@ const Index = () => {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
             {steps.map((s, i) => (
-              <div key={i} className="relative text-center">
-                <div className="text-5xl font-black text-primary/10 mb-2">{s.step}</div>
+              <div key={i} className="relative text-center group">
+                <div className="text-5xl font-black text-primary/15 mb-2 group-hover:text-primary/25 transition-colors">{s.step}</div>
                 <h3 className="text-lg font-semibold mb-1">{s.title}</h3>
                 <p className="text-sm text-muted-foreground">{s.description}</p>
               </div>
@@ -111,12 +113,12 @@ const Index = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 lg:py-28">
+      <section className="py-20 lg:py-28 border-b border-border">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold mb-4">Built for Privacy & Speed</h2>
+            <h2 className="text-3xl lg:text-4xl font-bold mb-4">{c.features_title || 'Built for Privacy & Speed'}</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Everything you need to buy and manage digital services — without compromise.
+              {c.features_subtitle || 'Everything you need to buy and manage digital services — without compromise.'}
             </p>
           </div>
 
@@ -124,7 +126,7 @@ const Index = () => {
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="group p-6 rounded-xl border bg-card shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-elevated)] transition-all duration-300"
+                className="group p-6 rounded-xl border border-border bg-card/50 backdrop-blur-sm hover:bg-card hover:border-primary/30 transition-all duration-300"
               >
                 <div className="h-11 w-11 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
                   <feature.icon className="h-5 w-5 text-primary" />
@@ -138,7 +140,7 @@ const Index = () => {
       </section>
 
       {/* Social Proof */}
-      <section className="py-16 border-t border-b bg-muted/30">
+      <section className="py-16 border-b border-border">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap justify-center gap-x-12 gap-y-4 text-muted-foreground">
             {[
@@ -161,10 +163,10 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto text-center">
             <h2 className="text-3xl lg:text-5xl font-bold mb-6 tracking-tight">
-              Ready to go?
+              {c.cta_title || 'Ready to go?'}
             </h2>
             <p className="text-lg text-muted-foreground mb-10">
-              Create your account and start browsing services in under a minute.
+              {c.cta_subtitle || 'Create your account and start browsing services in under a minute.'}
             </p>
             <Button size="lg" className="gap-2 text-base px-10" onClick={() => navigate(user ? '/services' : '/auth')}>
               {user ? 'Browse Services' : 'Create Free Account'} <ArrowRight className="h-4 w-4" />
@@ -173,12 +175,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t py-8">
-        <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-          © {new Date().getFullYear()} DigiHub. All rights reserved.
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
