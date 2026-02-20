@@ -8,6 +8,10 @@ import { useToast } from '@/hooks/use-toast';
 import Navbar from '@/components/Navbar';
 import { QRCodeSVG } from 'qrcode.react';
 import { Bitcoin, Copy, Check } from 'lucide-react';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
+import Footer from '@/components/Footer';
 
 interface Service {
   id: string;
@@ -27,6 +31,7 @@ const Purchase = () => {
   const [loading, setLoading] = useState(true);
   const [orderCreated, setOrderCreated] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [instructions, setInstructions] = useState('');
 
   useEffect(() => {
     if (!user) {
@@ -70,6 +75,7 @@ const Purchase = () => {
           btc_address: service.btc_address,
           btc_amount: service.btc_price,
           status: 'pending',
+          instructions: instructions.trim() || null,
         });
 
       if (error) throw error;
@@ -134,10 +140,34 @@ const Purchase = () => {
                 </div>
               </div>
 
+              <div className="space-y-2">
+                <Label htmlFor="instructions">Further Instructions (optional)</Label>
+                <Textarea
+                  id="instructions"
+                  placeholder="Any special requirements, details, or messages for the admin..."
+                  value={instructions}
+                  onChange={(e) => setInstructions(e.target.value)}
+                  maxLength={1000}
+                  disabled={orderCreated}
+                />
+                <p className="text-xs text-muted-foreground">{instructions.length}/1000</p>
+              </div>
+
               {!orderCreated ? (
-                <Button onClick={createOrder} className="w-full" size="lg">
-                  Proceed to Payment
-                </Button>
+                <div className="space-y-4">
+                  <div className="flex items-start gap-2">
+                    <Checkbox id="terms" required />
+                    <label htmlFor="terms" className="text-sm text-muted-foreground leading-tight">
+                      I agree to the{' '}
+                      <a href="/terms" target="_blank" className="text-primary underline">Terms of Service</a>
+                      {' '}and{' '}
+                      <a href="/privacy" target="_blank" className="text-primary underline">Privacy Policy</a>
+                    </label>
+                  </div>
+                  <Button onClick={createOrder} className="w-full" size="lg">
+                    Proceed to Payment
+                  </Button>
+                </div>
               ) : (
                 <div className="space-y-6">
                   <div className="text-center space-y-4">
@@ -178,6 +208,7 @@ const Purchase = () => {
           </Card>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

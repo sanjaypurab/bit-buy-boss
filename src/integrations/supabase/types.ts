@@ -50,6 +50,7 @@ export type Database = {
           btc_amount: number | null
           created_at: string | null
           id: string
+          instructions: string | null
           payment_confirmed_at: string | null
           payment_confirmed_by: string | null
           service_id: string
@@ -62,6 +63,7 @@ export type Database = {
           btc_amount?: number | null
           created_at?: string | null
           id?: string
+          instructions?: string | null
           payment_confirmed_at?: string | null
           payment_confirmed_by?: string | null
           service_id: string
@@ -74,6 +76,7 @@ export type Database = {
           btc_amount?: number | null
           created_at?: string | null
           id?: string
+          instructions?: string | null
           payment_confirmed_at?: string | null
           payment_confirmed_by?: string | null
           service_id?: string
