@@ -8,6 +8,7 @@ import { useToast } from '@/hooks/use-toast';
 import Navbar from '@/components/Navbar';
 import { Loader2, Bitcoin } from 'lucide-react';
 import UserMessages from '@/components/UserMessages';
+import Footer from '@/components/Footer';
 
 interface Order {
   id: string;
@@ -151,6 +152,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
