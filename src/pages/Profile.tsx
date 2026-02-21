@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { useToast } from '@/hooks/use-toast';
 import { Eye, EyeOff, User } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import Footer from '@/components/Footer';
 
 const Profile = () => {
   const { user } = useAuth();
@@ -66,7 +67,7 @@ const Profile = () => {
           <CardContent className="space-y-6">
             <div>
               <Label className="text-muted-foreground text-xs">Account ID</Label>
-              <p className="text-sm font-mono mt-1 break-all">{user.id}</p>
+              <p className="text-sm font-mono mt-1 break-all">{user.id.slice(0, 8)}…{user.id.slice(-4)}</p>
             </div>
             <div>
               <Label className="text-muted-foreground text-xs">Joined</Label>
@@ -117,6 +118,7 @@ const Profile = () => {
           </CardContent>
         </Card>
       </div>
+      <Footer />
     </div>
   );
 };
