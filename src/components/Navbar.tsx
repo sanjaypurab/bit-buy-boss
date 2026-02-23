@@ -1,7 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { useCart } from '@/contexts/CartContext';
 import { Button } from '@/components/ui/button';
-import { Shield, LogOut, LayoutDashboard, ShoppingBag, Menu, User } from 'lucide-react';
+import { Shield, LogOut, LayoutDashboard, ShoppingBag, Menu, User, ShoppingCart } from 'lucide-react';
 import {
   Sheet,
   SheetContent,
@@ -10,26 +11,43 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { useState } from 'react';
+import { Badge } from '@/components/ui/badge';
 
 const Navbar = () => {
   const { user, isAdmin, signOut } = useAuth();
+  const { itemCount } = useCart();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
   const close = () => setOpen(false);
 
+  const CartButton = () => (
+    <Link to="/cart" onClick={close}>
+      <Button variant="ghost" className="gap-2 w-full justify-start relative">
+        <ShoppingCart className="h-4 w-4" />
+        Cart
+        {itemCount > 0 && (
+          <Badge className="h-5 w-5 p-0 flex items-center justify-center text-[10px] absolute -top-1 -right-1">
+            {itemCount}
+          </Badge>
+        )}
+      </Button>
+    </Link>
+  );
+
   const NavLinks = ({ mobile = false }: { mobile?: boolean }) => {
     const cls = mobile ? 'flex flex-col gap-2' : 'flex items-center gap-4';
     return (
       <div className={cls}>
+        <Link to="/services" onClick={close}>
+          <Button variant="ghost" className="gap-2 w-full justify-start">
+            <ShoppingBag className="h-4 w-4" />
+            Services
+          </Button>
+        </Link>
+        <CartButton />
         {user ? (
           <>
-            <Link to="/services" onClick={close}>
-              <Button variant="ghost" className="gap-2 w-full justify-start">
-                <ShoppingBag className="h-4 w-4" />
-                Services
-              </Button>
-            </Link>
             <Link to="/dashboard" onClick={close}>
               <Button variant="ghost" className="gap-2 w-full justify-start">
                 <LayoutDashboard className="h-4 w-4" />
@@ -94,7 +112,7 @@ const Navbar = () => {
               <SheetHeader>
                 <SheetTitle className="flex items-center gap-2">
                   <Shield className="h-5 w-5 text-primary" />
-                  DigiHub
+                  BitBuyBoss
                 </SheetTitle>
               </SheetHeader>
               <div className="mt-6">
