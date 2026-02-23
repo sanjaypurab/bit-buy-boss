@@ -15,6 +15,7 @@ import { Plus, Loader2, Pencil, X, Save } from 'lucide-react';
 import AdminUsersTab from '@/components/admin/AdminUsersTab';
 import AdminMessagesTab from '@/components/admin/AdminMessagesTab';
 import AdminContentTab from '@/components/admin/AdminContentTab';
+import AdminCategoriesTab from '@/components/admin/AdminCategoriesTab';
 
 interface Order {
   id: string;
@@ -37,6 +38,12 @@ interface Service {
   btc_address: string | null;
   is_active: boolean;
   features: any;
+  category_id: string | null;
+}
+
+interface Category {
+  id: string;
+  name: string;
 }
 
 const Admin = () => {
@@ -45,6 +52,7 @@ const Admin = () => {
   const { toast } = useToast();
   const [orders, setOrders] = useState<Order[]>([]);
   const [services, setServices] = useState<Service[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [showAddService, setShowAddService] = useState(false);
   const [editingService, setEditingService] = useState<string | null>(null);
@@ -56,6 +64,7 @@ const Admin = () => {
     btc_address: '',
     features: '',
     is_active: true,
+    category_id: '',
   });
   const [newService, setNewService] = useState({
     name: '',
@@ -64,6 +73,7 @@ const Admin = () => {
     btc_price: '',
     btc_address: '',
     features: '',
+    category_id: '',
   });
 
   useEffect(() => {
@@ -75,8 +85,13 @@ const Admin = () => {
   }, [user, isAdmin]);
 
   const fetchData = async () => {
-    await Promise.all([fetchOrders(), fetchServices()]);
+    await Promise.all([fetchOrders(), fetchServices(), fetchCategories()]);
     setLoading(false);
+  };
+
+  const fetchCategories = async () => {
+    const { data } = await supabase.from('categories').select('id, name').order('sort_order');
+    setCategories(data || []);
   };
 
   const fetchOrders = async () => {
@@ -180,6 +195,7 @@ const Admin = () => {
         btc_address: newService.btc_address || null,
         features,
         is_active: true,
+        category_id: newService.category_id || null,
       });
 
       if (error) throw error;
@@ -189,7 +205,7 @@ const Admin = () => {
         description: 'Service added successfully',
       });
       
-      setNewService({ name: '', description: '', price: '', btc_price: '', btc_address: '', features: '' });
+      setNewService({ name: '', description: '', price: '', btc_price: '', btc_address: '', features: '', category_id: '' });
       setShowAddService(false);
       fetchServices();
     } catch (error: any) {
@@ -211,6 +227,7 @@ const Admin = () => {
       btc_address: service.btc_address || '',
       features: Array.isArray(service.features) ? service.features.join('\n') : '',
       is_active: service.is_active,
+      category_id: service.category_id || '',
     });
   };
 
@@ -231,6 +248,7 @@ const Admin = () => {
           btc_address: editForm.btc_address || null,
           features,
           is_active: editForm.is_active,
+          category_id: editForm.category_id || null,
         })
         .eq('id', serviceId);
 
@@ -268,6 +286,7 @@ const Admin = () => {
               <TabsTrigger value="services">Services</TabsTrigger>
               <TabsTrigger value="users">Users</TabsTrigger>
               <TabsTrigger value="messages">Messages</TabsTrigger>
+              <TabsTrigger value="categories">Categories</TabsTrigger>
               <TabsTrigger value="content">Homepage</TabsTrigger>
             </TabsList>
 
@@ -384,6 +403,17 @@ const Admin = () => {
                         placeholder="Feature 1&#10;Feature 2&#10;Feature 3"
                       />
                     </div>
+                    <div>
+                      <Label>Category</Label>
+                      <select
+                        className="w-full px-3 py-2 border rounded-md bg-background text-foreground"
+                        value={newService.category_id}
+                        onChange={e => setNewService({ ...newService, category_id: e.target.value })}
+                      >
+                        <option value="">No category</option>
+                        {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                      </select>
+                    </div>
                     <Button onClick={addService}>Add Service</Button>
                   </CardContent>
                 </Card>
@@ -445,6 +475,17 @@ const Admin = () => {
                             <Label>Features (one per line)</Label>
                             <Textarea value={editForm.features} onChange={(e) => setEditForm({ ...editForm, features: e.target.value })} />
                           </div>
+                          <div>
+                            <Label>Category</Label>
+                            <select
+                              className="w-full px-3 py-2 border rounded-md bg-background text-foreground"
+                              value={editForm.category_id}
+                              onChange={e => setEditForm({ ...editForm, category_id: e.target.value })}
+                            >
+                              <option value="">No category</option>
+                              {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
+                            </select>
+                          </div>
                           <div className="flex items-center gap-2">
                             <Label>Active</Label>
                             <input type="checkbox" checked={editForm.is_active} onChange={(e) => setEditForm({ ...editForm, is_active: e.target.checked })} />
@@ -474,6 +515,10 @@ const Admin = () => {
 
             <TabsContent value="messages">
               <AdminMessagesTab />
+            </TabsContent>
+
+            <TabsContent value="categories">
+              <AdminCategoriesTab />
             </TabsContent>
 
             <TabsContent value="content">

@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      categories: {
+        Row: {
+          created_at: string
+          id: string
+          image_url: string | null
+          name: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          name: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          name?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       messages: {
         Row: {
           body: string
@@ -125,6 +152,7 @@ export type Database = {
         Row: {
           btc_address: string | null
           btc_price: number | null
+          category_id: string | null
           created_at: string | null
           description: string
           features: Json | null
@@ -137,6 +165,7 @@ export type Database = {
         Insert: {
           btc_address?: string | null
           btc_price?: number | null
+          category_id?: string | null
           created_at?: string | null
           description: string
           features?: Json | null
@@ -149,6 +178,7 @@ export type Database = {
         Update: {
           btc_address?: string | null
           btc_price?: number | null
+          category_id?: string | null
           created_at?: string | null
           description?: string
           features?: Json | null
@@ -158,7 +188,15 @@ export type Database = {
           price?: number
           updated_at?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "services_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       site_content: {
         Row: {
