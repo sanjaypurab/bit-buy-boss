@@ -76,10 +76,13 @@ export type Database = {
           btc_address: string | null
           btc_amount: number | null
           created_at: string | null
+          customer_email: string | null
           id: string
           instructions: string | null
           payment_confirmed_at: string | null
           payment_confirmed_by: string | null
+          payment_id: string | null
+          payment_status: string | null
           service_id: string
           status: string | null
           updated_at: string | null
@@ -89,10 +92,13 @@ export type Database = {
           btc_address?: string | null
           btc_amount?: number | null
           created_at?: string | null
+          customer_email?: string | null
           id?: string
           instructions?: string | null
           payment_confirmed_at?: string | null
           payment_confirmed_by?: string | null
+          payment_id?: string | null
+          payment_status?: string | null
           service_id: string
           status?: string | null
           updated_at?: string | null
@@ -102,10 +108,13 @@ export type Database = {
           btc_address?: string | null
           btc_amount?: number | null
           created_at?: string | null
+          customer_email?: string | null
           id?: string
           instructions?: string | null
           payment_confirmed_at?: string | null
           payment_confirmed_by?: string | null
+          payment_id?: string | null
+          payment_status?: string | null
           service_id?: string
           status?: string | null
           updated_at?: string | null
