@@ -76,6 +76,24 @@ const Admin = () => {
     features: '',
     category_id: '',
   });
+  const [uploadingImage, setUploadingImage] = useState(false);
+
+  const uploadImage = async (file: File): Promise<string | null> => {
+    setUploadingImage(true);
+    try {
+      const ext = file.name.split('.').pop();
+      const path = `${crypto.randomUUID()}.${ext}`;
+      const { error } = await supabase.storage.from('service-images').upload(path, file);
+      if (error) throw error;
+      const { data: urlData } = supabase.storage.from('service-images').getPublicUrl(path);
+      return urlData.publicUrl;
+    } catch (err: any) {
+      toast({ title: 'Upload failed', description: err.message, variant: 'destructive' });
+      return null;
+    } finally {
+      setUploadingImage(false);
+    }
+  };
 
   useEffect(() => {
     if (!user || !isAdmin) {
