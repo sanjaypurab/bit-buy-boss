@@ -60,6 +60,23 @@ const ServiceDetail = () => {
     url: window.location.href,
   });
 
+  const serviceJsonLd = service ? {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: service.name,
+    description: service.description,
+    url: window.location.href,
+    image: `${window.location.origin}/og-image.png`,
+    brand: { '@type': 'Brand', name: 'BitBuyBoss' },
+    offers: {
+      '@type': 'Offer',
+      price: service.price,
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+      url: window.location.href,
+    },
+  } : null;
+
   const inCart = service ? items.some(i => i.id === service.id) : false;
 
   const handleAdd = () => {
