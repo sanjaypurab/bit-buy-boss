@@ -55,7 +55,7 @@ const Index = () => {
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full border border-border bg-muted/50 backdrop-blur-sm text-sm font-medium text-muted-foreground">
               <Bitcoin className="h-4 w-4 text-primary" />
-              {c.hero_badge || 'Bitcoin-native digital services'}
+              {c.hero_badge || 'Bitcoin-native digital products & services'}
             </div>
             <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[1.08]">
               {c.hero_title_line1 || 'Digital services,'}
