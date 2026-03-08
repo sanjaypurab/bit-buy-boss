@@ -11,7 +11,7 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import Navbar from '@/components/Navbar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Plus, Loader2, Pencil, X, Save } from 'lucide-react';
+import { Plus, Loader2, Pencil, X, Save, Upload, ImageIcon } from 'lucide-react';
 import AdminUsersTab from '@/components/admin/AdminUsersTab';
 import AdminMessagesTab from '@/components/admin/AdminMessagesTab';
 import AdminContentTab from '@/components/admin/AdminContentTab';
