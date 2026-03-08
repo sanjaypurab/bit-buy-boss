@@ -17,7 +17,7 @@ const TermsOfService = () => {
 
           <section>
             <h2 className="text-xl font-semibold mb-2">2. Services</h2>
-            <p className="text-muted-foreground">DigiHub provides digital services available for purchase via cryptocurrency (Bitcoin). All services are delivered digitally and are subject to availability.</p>
+            <p className="text-muted-foreground">BitBuyBoss provides digital services available for purchase via cryptocurrency (Bitcoin). All services are delivered digitally and are subject to availability.</p>
           </section>
 
           <section>
