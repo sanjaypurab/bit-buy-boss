@@ -126,7 +126,7 @@ const Dashboard = () => {
                   <CardContent>
                     <p className="text-muted-foreground mb-4">No orders yet</p>
                     <button onClick={() => navigate('/services')} className="text-primary hover:underline">
-                      Browse services
+                      Browse products & services
                     </button>
                   </CardContent>
                 </Card>
