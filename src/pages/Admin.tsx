@@ -215,6 +215,7 @@ const Admin = () => {
         features,
         is_active: true,
         category_id: newService.category_id || null,
+        image_url: (newService as any).image_url || null,
       });
 
       if (error) throw error;
