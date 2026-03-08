@@ -153,7 +153,28 @@ const Services = () => {
                 return (
                   <Card key={service.id} className="flex flex-col shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-elevated)] transition-shadow">
                     <CardHeader>
-                      <CardTitle>{service.name}</CardTitle>
+                      <div className="flex items-start justify-between gap-2">
+                        <Link to={`/services/${service.id}`} className="hover:underline">
+                          <CardTitle>{service.name}</CardTitle>
+                        </Link>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8 shrink-0"
+                          onClick={async () => {
+                            const url = `${window.location.origin}/services/${service.id}`;
+                            if (navigator.share) {
+                              try { await navigator.share({ title: service.name, text: service.description, url }); } catch {}
+                            } else {
+                              await navigator.clipboard.writeText(url);
+                              toast({ title: 'Link copied!' });
+                            }
+                          }}
+                          title="Share"
+                        >
+                          <Share2 className="h-4 w-4" />
+                        </Button>
+                      </div>
                       <CardDescription>{service.description}</CardDescription>
                     </CardHeader>
                     <CardContent className="flex-1">
