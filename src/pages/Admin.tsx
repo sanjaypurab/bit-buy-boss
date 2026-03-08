@@ -66,6 +66,7 @@ const Admin = () => {
   const [services, setServices] = useState<Service[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
+  const [orderFilter, setOrderFilter] = useState<string>('all');
   const [showAddService, setShowAddService] = useState(false);
   const [editingService, setEditingService] = useState<string | null>(null);
   const [editForm, setEditForm] = useState({
