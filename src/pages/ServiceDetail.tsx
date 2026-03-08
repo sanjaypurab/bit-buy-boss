@@ -67,7 +67,7 @@ const ServiceDetail = () => {
     name: service.name,
     description: service.description,
     url: window.location.href,
-    image: `${window.location.origin}/og-image.png`,
+    image: service.image_url || `${window.location.origin}/og-image.png`,
     brand: { '@type': 'Brand', name: 'BitBuyBoss' },
     offers: {
       '@type': 'Offer',
