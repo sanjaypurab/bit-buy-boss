@@ -130,6 +130,7 @@ const ServiceDetail = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      {serviceJsonLd && <JsonLd data={serviceJsonLd} />}
       <Navbar />
       <div className="container mx-auto px-4 py-12 flex-1">
         <div className="max-w-2xl mx-auto">

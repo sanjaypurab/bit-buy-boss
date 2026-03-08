@@ -8,6 +8,7 @@ import { useCart } from '@/contexts/CartContext';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Loader2, ShoppingCart, Check, ImageIcon, Share2 } from 'lucide-react';
+import JsonLd from '@/components/JsonLd';
 
 interface Category {
   id: string;
