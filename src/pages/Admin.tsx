@@ -39,6 +39,7 @@ interface Service {
   is_active: boolean;
   features: any;
   category_id: string | null;
+  image_url: string | null;
 }
 
 interface Category {
