@@ -576,14 +576,21 @@ const Admin = () => {
                         </div>
                       ) : (
                         <>
-                          <p className="text-sm text-muted-foreground mb-2">{service.description}</p>
-                          <div className="flex items-center gap-4">
-                            <div className="text-lg font-bold">${service.price}</div>
-                            {service.btc_price && <div className="text-sm text-muted-foreground">{service.btc_price} BTC</div>}
+                          <div className="flex items-start gap-4">
+                            {service.image_url && (
+                              <img src={service.image_url} alt={service.name} className="h-16 w-16 rounded object-cover shrink-0" />
+                            )}
+                            <div>
+                              <p className="text-sm text-muted-foreground mb-2">{service.description}</p>
+                              <div className="flex items-center gap-4">
+                                <div className="text-lg font-bold">${service.price}</div>
+                                {service.btc_price && <div className="text-sm text-muted-foreground">{service.btc_price} BTC</div>}
+                              </div>
+                              {service.btc_address && (
+                                <div className="mt-2 text-xs font-mono text-muted-foreground truncate">BTC: {service.btc_address}</div>
+                              )}
+                            </div>
                           </div>
-                          {service.btc_address && (
-                            <div className="mt-2 text-xs font-mono text-muted-foreground truncate">BTC: {service.btc_address}</div>
-                          )}
                         </>
                       )}
                     </CardContent>
