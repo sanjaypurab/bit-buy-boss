@@ -51,7 +51,7 @@ Premium digital services purchasable with Bitcoin. No banks, no middlemen, just 
 
 ## 👤 User Brief
 
-### How to Use DigiHub
+### How to Use BitBuyBoss
 1. **Create an account** at `/auth` with your email and password
 2. **Verify your email** (check inbox for confirmation link)
 3. **Browse services** at `/services` — filter by category
