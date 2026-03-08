@@ -11,6 +11,7 @@ import ResetPassword from "./pages/ResetPassword";
 import Profile from "./pages/Profile";
 import Services from "./pages/Services";
 import Cart from "./pages/Cart";
+import ServiceDetail from "./pages/ServiceDetail";
 import Dashboard from "./pages/Dashboard";
 import Admin from "./pages/Admin";
 import TermsOfService from "./pages/TermsOfService";
