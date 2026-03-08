@@ -539,6 +539,36 @@ const Admin = () => {
                               {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                             </select>
                           </div>
+                          <div>
+                            <Label>Product Image</Label>
+                            <div className="flex items-center gap-3 mt-1">
+                              <Button
+                                type="button"
+                                variant="outline"
+                                className="gap-2"
+                                disabled={uploadingImage}
+                                onClick={() => document.getElementById('edit-service-image')?.click()}
+                              >
+                                {uploadingImage ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
+                                {editForm.image_url ? 'Change Image' : 'Upload Image'}
+                              </Button>
+                              {editForm.image_url && (
+                                <img src={editForm.image_url} alt="" className="h-10 w-10 rounded object-cover" />
+                              )}
+                              <input
+                                id="edit-service-image"
+                                type="file"
+                                accept="image/*"
+                                className="hidden"
+                                onChange={async (e) => {
+                                  const file = e.target.files?.[0];
+                                  if (!file) return;
+                                  const url = await uploadImage(file);
+                                  if (url) setEditForm({ ...editForm, image_url: url });
+                                }}
+                              />
+                            </div>
+                          </div>
                           <div className="flex items-center gap-2">
                             <Label>Active</Label>
                             <input type="checkbox" checked={editForm.is_active} onChange={(e) => setEditForm({ ...editForm, is_active: e.target.checked })} />
