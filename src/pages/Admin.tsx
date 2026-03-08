@@ -264,6 +264,17 @@ const Admin = () => {
     });
   };
 
+  const deleteService = async (serviceId: string) => {
+    try {
+      const { error } = await supabase.from('services').delete().eq('id', serviceId);
+      if (error) throw error;
+      toast({ title: 'Success', description: 'Service deleted successfully' });
+      fetchServices();
+    } catch (error: any) {
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+    }
+  };
+
   const saveEdit = async (serviceId: string) => {
     try {
       const features = editForm.features
