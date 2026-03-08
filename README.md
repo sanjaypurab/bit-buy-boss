@@ -6,7 +6,7 @@ Premium digital services purchasable with Bitcoin. No banks, no middlemen, just 
 
 ## 📊 Investor Brief
 
-**What it is:** DigiHub is a self-service digital services marketplace that accepts Bitcoin payments via NOWPayments. Customers browse a catalog, add services to a cart, and pay with BTC — the entire payment lifecycle (invoice creation, webhook confirmation, order status updates) is fully automated.
+**What it is:** BitBuyBoss is a self-service digital services marketplace that accepts Bitcoin payments via NOWPayments. Customers browse a catalog, add services to a cart, and pay with BTC — the entire payment lifecycle (invoice creation, webhook confirmation, order status updates) is fully automated.
 
 **Revenue model:** Service markup on digital offerings (email marketing, web development, etc.). All payments settle in USDT TRC20 via NOWPayments auto-conversion, eliminating BTC volatility risk.
 
