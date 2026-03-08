@@ -66,6 +66,7 @@ const Admin = () => {
     features: '',
     is_active: true,
     category_id: '',
+    image_url: '',
   });
   const [newService, setNewService] = useState({
     name: '',
