@@ -11,7 +11,7 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import Navbar from '@/components/Navbar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Plus, Loader2, Pencil, X, Save } from 'lucide-react';
+import { Plus, Loader2, Pencil, X, Save, Upload, ImageIcon } from 'lucide-react';
 import AdminUsersTab from '@/components/admin/AdminUsersTab';
 import AdminMessagesTab from '@/components/admin/AdminMessagesTab';
 import AdminContentTab from '@/components/admin/AdminContentTab';
@@ -39,6 +39,7 @@ interface Service {
   is_active: boolean;
   features: any;
   category_id: string | null;
+  image_url: string | null;
 }
 
 interface Category {
@@ -65,6 +66,7 @@ const Admin = () => {
     features: '',
     is_active: true,
     category_id: '',
+    image_url: '',
   });
   const [newService, setNewService] = useState({
     name: '',
@@ -75,6 +77,24 @@ const Admin = () => {
     features: '',
     category_id: '',
   });
+  const [uploadingImage, setUploadingImage] = useState(false);
+
+  const uploadImage = async (file: File): Promise<string | null> => {
+    setUploadingImage(true);
+    try {
+      const ext = file.name.split('.').pop();
+      const path = `${crypto.randomUUID()}.${ext}`;
+      const { error } = await supabase.storage.from('service-images').upload(path, file);
+      if (error) throw error;
+      const { data: urlData } = supabase.storage.from('service-images').getPublicUrl(path);
+      return urlData.publicUrl;
+    } catch (err: any) {
+      toast({ title: 'Upload failed', description: err.message, variant: 'destructive' });
+      return null;
+    } finally {
+      setUploadingImage(false);
+    }
+  };
 
   useEffect(() => {
     if (!user || !isAdmin) {
@@ -196,6 +216,7 @@ const Admin = () => {
         features,
         is_active: true,
         category_id: newService.category_id || null,
+        image_url: (newService as any).image_url || null,
       });
 
       if (error) throw error;
@@ -228,6 +249,7 @@ const Admin = () => {
       features: Array.isArray(service.features) ? service.features.join('\n') : '',
       is_active: service.is_active,
       category_id: service.category_id || '',
+      image_url: service.image_url || '',
     });
   };
 
@@ -249,6 +271,7 @@ const Admin = () => {
           features,
           is_active: editForm.is_active,
           category_id: editForm.category_id || null,
+          image_url: editForm.image_url || null,
         })
         .eq('id', serviceId);
 
@@ -414,6 +437,36 @@ const Admin = () => {
                         {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                       </select>
                     </div>
+                    <div>
+                      <Label>Product Image</Label>
+                      <div className="flex items-center gap-3 mt-1">
+                        <Button
+                          type="button"
+                          variant="outline"
+                          className="gap-2"
+                          disabled={uploadingImage}
+                          onClick={() => document.getElementById('new-service-image')?.click()}
+                        >
+                          {uploadingImage ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
+                          Upload Image
+                        </Button>
+                        {(newService as any).image_url && (
+                          <img src={(newService as any).image_url} alt="" className="h-10 w-10 rounded object-cover" />
+                        )}
+                        <input
+                          id="new-service-image"
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={async (e) => {
+                            const file = e.target.files?.[0];
+                            if (!file) return;
+                            const url = await uploadImage(file);
+                            if (url) setNewService({ ...newService, image_url: url } as any);
+                          }}
+                        />
+                      </div>
+                    </div>
                     <Button onClick={addService}>Add Service</Button>
                   </CardContent>
                 </Card>
@@ -486,6 +539,36 @@ const Admin = () => {
                               {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                             </select>
                           </div>
+                          <div>
+                            <Label>Product Image</Label>
+                            <div className="flex items-center gap-3 mt-1">
+                              <Button
+                                type="button"
+                                variant="outline"
+                                className="gap-2"
+                                disabled={uploadingImage}
+                                onClick={() => document.getElementById('edit-service-image')?.click()}
+                              >
+                                {uploadingImage ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
+                                {editForm.image_url ? 'Change Image' : 'Upload Image'}
+                              </Button>
+                              {editForm.image_url && (
+                                <img src={editForm.image_url} alt="" className="h-10 w-10 rounded object-cover" />
+                              )}
+                              <input
+                                id="edit-service-image"
+                                type="file"
+                                accept="image/*"
+                                className="hidden"
+                                onChange={async (e) => {
+                                  const file = e.target.files?.[0];
+                                  if (!file) return;
+                                  const url = await uploadImage(file);
+                                  if (url) setEditForm({ ...editForm, image_url: url });
+                                }}
+                              />
+                            </div>
+                          </div>
                           <div className="flex items-center gap-2">
                             <Label>Active</Label>
                             <input type="checkbox" checked={editForm.is_active} onChange={(e) => setEditForm({ ...editForm, is_active: e.target.checked })} />
@@ -493,14 +576,21 @@ const Admin = () => {
                         </div>
                       ) : (
                         <>
-                          <p className="text-sm text-muted-foreground mb-2">{service.description}</p>
-                          <div className="flex items-center gap-4">
-                            <div className="text-lg font-bold">${service.price}</div>
-                            {service.btc_price && <div className="text-sm text-muted-foreground">{service.btc_price} BTC</div>}
+                          <div className="flex items-start gap-4">
+                            {service.image_url && (
+                              <img src={service.image_url} alt={service.name} className="h-16 w-16 rounded object-cover shrink-0" />
+                            )}
+                            <div>
+                              <p className="text-sm text-muted-foreground mb-2">{service.description}</p>
+                              <div className="flex items-center gap-4">
+                                <div className="text-lg font-bold">${service.price}</div>
+                                {service.btc_price && <div className="text-sm text-muted-foreground">{service.btc_price} BTC</div>}
+                              </div>
+                              {service.btc_address && (
+                                <div className="mt-2 text-xs font-mono text-muted-foreground truncate">BTC: {service.btc_address}</div>
+                              )}
+                            </div>
                           </div>
-                          {service.btc_address && (
-                            <div className="mt-2 text-xs font-mono text-muted-foreground truncate">BTC: {service.btc_address}</div>
-                          )}
                         </>
                       )}
                     </CardContent>

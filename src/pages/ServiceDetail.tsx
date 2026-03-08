@@ -20,6 +20,7 @@ interface Service {
   btc_address: string | null;
   features: string[];
   category_id: string | null;
+  image_url: string | null;
 }
 
 const ServiceDetail = () => {
@@ -56,7 +57,7 @@ const ServiceDetail = () => {
   useMetaTags({
     title: service?.name,
     description: service?.description,
-    image: `${window.location.origin}/og-image.png`,
+    image: service?.image_url || `${window.location.origin}/og-image.png`,
     url: window.location.href,
   });
 
@@ -66,7 +67,7 @@ const ServiceDetail = () => {
     name: service.name,
     description: service.description,
     url: window.location.href,
-    image: `${window.location.origin}/og-image.png`,
+    image: service.image_url || `${window.location.origin}/og-image.png`,
     brand: { '@type': 'Brand', name: 'BitBuyBoss' },
     offers: {
       '@type': 'Offer',
@@ -138,7 +139,16 @@ const ServiceDetail = () => {
             <ArrowLeft className="h-4 w-4" /> Back to Services
           </Link>
 
-          <Card className="shadow-[var(--shadow-elevated)]">
+          <Card className="shadow-[var(--shadow-elevated)] overflow-hidden">
+            {service.image_url && (
+              <div className="aspect-video w-full overflow-hidden bg-muted">
+                <img
+                  src={service.image_url}
+                  alt={service.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
             <CardHeader>
               <div className="flex items-start justify-between gap-4">
                 <div>

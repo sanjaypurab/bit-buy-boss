@@ -25,6 +25,7 @@ interface Service {
   btc_address: string | null;
   features: string[];
   category_id: string | null;
+  image_url: string | null;
 }
 
 const Services = () => {
@@ -170,7 +171,19 @@ const Services = () => {
               {filteredServices.map((service) => {
                 const inCart = isInCart(service.id);
                 return (
-                  <Card key={service.id} className="flex flex-col shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-elevated)] transition-shadow">
+                  <Card key={service.id} className="flex flex-col shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-elevated)] transition-shadow overflow-hidden">
+                    {service.image_url && (
+                      <Link to={`/services/${service.id}`}>
+                        <div className="aspect-video w-full overflow-hidden bg-muted">
+                          <img
+                            src={service.image_url}
+                            alt={service.name}
+                            className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                            loading="lazy"
+                          />
+                        </div>
+                      </Link>
+                    )}
                     <CardHeader>
                       <div className="flex items-start justify-between gap-2">
                         <Link to={`/services/${service.id}`} className="hover:underline">
