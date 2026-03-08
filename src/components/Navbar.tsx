@@ -90,7 +90,7 @@ const Navbar = () => {
     <nav className="border-b bg-card shadow-[var(--shadow-card)]">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 font-bold text-xl">
-          <img src="/logo.png" alt="BitBuyBoss logo" className="h-10 w-10" />
+          <img src="/logo.png" alt="BitBuyBoss logo" className="h-20 w-20" />
           <span>BitBuyBoss</span>
         </Link>
 
