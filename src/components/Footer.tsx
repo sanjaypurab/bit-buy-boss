@@ -6,7 +6,7 @@ const Footer = () => {
     <footer className="border-t bg-card py-6">
       <div className="container mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
         <div className="flex items-center gap-2">
-          <img src="/logo.png" alt="BitBuyBoss logo" className="h-4 w-4" />
+          <img src="/logo.png" alt="BitBuyBoss logo" className="h-6 w-6" />
           <span>&copy; {new Date().getFullYear()} BitBuyBoss</span>
         </div>
         <div className="flex items-center gap-4">
