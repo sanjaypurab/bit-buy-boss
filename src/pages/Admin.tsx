@@ -11,7 +11,18 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import Navbar from '@/components/Navbar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Plus, Loader2, Pencil, X, Save, Upload, ImageIcon } from 'lucide-react';
+import { Plus, Loader2, Pencil, X, Save, Upload, ImageIcon, Trash2 } from 'lucide-react';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import AdminUsersTab from '@/components/admin/AdminUsersTab';
 import AdminMessagesTab from '@/components/admin/AdminMessagesTab';
 import AdminContentTab from '@/components/admin/AdminContentTab';
@@ -253,6 +264,17 @@ const Admin = () => {
     });
   };
 
+  const deleteService = async (serviceId: string) => {
+    try {
+      const { error } = await supabase.from('services').delete().eq('id', serviceId);
+      if (error) throw error;
+      toast({ title: 'Success', description: 'Service deleted successfully' });
+      fetchServices();
+    } catch (error: any) {
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
+    }
+  };
+
   const saveEdit = async (serviceId: string) => {
     try {
       const features = editForm.features
@@ -492,9 +514,32 @@ const Admin = () => {
                               </Button>
                             </>
                           ) : (
-                            <Button size="icon" variant="ghost" onClick={() => startEditing(service)}>
-                              <Pencil className="h-4 w-4" />
-                            </Button>
+                            <>
+                              <Button size="icon" variant="ghost" onClick={() => startEditing(service)}>
+                                <Pencil className="h-4 w-4" />
+                              </Button>
+                              <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                  <Button size="icon" variant="ghost" className="text-destructive hover:text-destructive">
+                                    <Trash2 className="h-4 w-4" />
+                                  </Button>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent>
+                                  <AlertDialogHeader>
+                                    <AlertDialogTitle>Delete "{service.name}"?</AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                      This action cannot be undone. This will permanently delete this product and remove it from the catalog.
+                                    </AlertDialogDescription>
+                                  </AlertDialogHeader>
+                                  <AlertDialogFooter>
+                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                    <AlertDialogAction onClick={() => deleteService(service.id)} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+                                      Delete
+                                    </AlertDialogAction>
+                                  </AlertDialogFooter>
+                                </AlertDialogContent>
+                              </AlertDialog>
+                            </>
                           )}
                         </div>
                       </div>
