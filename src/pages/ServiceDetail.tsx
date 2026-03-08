@@ -9,6 +9,7 @@ import { useMetaTags } from '@/hooks/useMetaTags';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Loader2, ShoppingCart, Check, ArrowLeft, Share2, Copy } from 'lucide-react';
+import JsonLd from '@/components/JsonLd';
 
 interface Service {
   id: string;
@@ -58,6 +59,23 @@ const ServiceDetail = () => {
     image: `${window.location.origin}/og-image.png`,
     url: window.location.href,
   });
+
+  const serviceJsonLd = service ? {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: service.name,
+    description: service.description,
+    url: window.location.href,
+    image: `${window.location.origin}/og-image.png`,
+    brand: { '@type': 'Brand', name: 'BitBuyBoss' },
+    offers: {
+      '@type': 'Offer',
+      price: service.price,
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+      url: window.location.href,
+    },
+  } : null;
 
   const inCart = service ? items.some(i => i.id === service.id) : false;
 
@@ -112,6 +130,7 @@ const ServiceDetail = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      {serviceJsonLd && <JsonLd data={serviceJsonLd} />}
       <Navbar />
       <div className="container mx-auto px-4 py-12 flex-1">
         <div className="max-w-2xl mx-auto">
