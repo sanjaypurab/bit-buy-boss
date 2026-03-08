@@ -337,21 +337,46 @@ const Admin = () => {
             </TabsList>
 
             <TabsContent value="orders" className="space-y-4">
-              {orders.filter(o => o.status === 'pending').length === 0 ? (
-                <Card>
-                  <CardContent className="text-center py-12">
-                    <p className="text-muted-foreground">No pending orders</p>
-                  </CardContent>
-                </Card>
-              ) : (
-                orders
-                  .filter(o => o.status === 'pending')
-                  .map((order) => (
+              <div className="flex flex-wrap gap-2">
+                {['all', 'pending', 'confirmed', 'completed', 'cancelled'].map((status) => {
+                  const count = status === 'all' ? orders.length : orders.filter(o => o.status === status).length;
+                  return (
+                    <Button
+                      key={status}
+                      variant={orderFilter === status ? 'default' : 'outline'}
+                      size="sm"
+                      onClick={() => setOrderFilter(status)}
+                      className="capitalize gap-1.5"
+                    >
+                      {status}
+                      <Badge variant="secondary" className="ml-1 text-xs px-1.5 py-0">{count}</Badge>
+                    </Button>
+                  );
+                })}
+              </div>
+
+              {(() => {
+                const filtered = orderFilter === 'all' ? orders : orders.filter(o => o.status === orderFilter);
+                if (filtered.length === 0) {
+                  return (
+                    <Card>
+                      <CardContent className="text-center py-12">
+                        <p className="text-muted-foreground">No {orderFilter === 'all' ? '' : orderFilter} orders</p>
+                      </CardContent>
+                    </Card>
+                  );
+                }
+                return filtered.map((order) => {
+                  const statusColor = order.status === 'confirmed' ? 'bg-success text-success-foreground'
+                    : order.status === 'completed' ? 'bg-primary text-primary-foreground'
+                    : order.status === 'cancelled' ? 'bg-destructive text-destructive-foreground'
+                    : 'bg-warning text-warning-foreground';
+                  return (
                     <Card key={order.id}>
                       <CardHeader>
                         <div className="flex items-center justify-between">
                           <CardTitle className="text-lg">{order.services.name}</CardTitle>
-                          <Badge>{order.status}</Badge>
+                          <Badge className={statusColor}>{order.status}</Badge>
                         </div>
                       </CardHeader>
                       <CardContent>
@@ -370,14 +395,20 @@ const Admin = () => {
                               {order.btc_amount}
                             </div>
                           )}
-                          <Button onClick={() => confirmPayment(order.id)}>
-                            Confirm Payment
-                          </Button>
+                          <div className="text-xs font-mono text-muted-foreground">
+                            ID: {order.id.slice(0, 8)}…{order.id.slice(-4)}
+                          </div>
+                          {order.status === 'pending' && (
+                            <Button onClick={() => confirmPayment(order.id)}>
+                              Confirm Payment
+                            </Button>
+                          )}
                         </div>
                       </CardContent>
                     </Card>
-                  ))
-              )}
+                  );
+                });
+              })()}
             </TabsContent>
 
             <TabsContent value="services" className="space-y-4">
