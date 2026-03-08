@@ -249,6 +249,7 @@ const Admin = () => {
       features: Array.isArray(service.features) ? service.features.join('\n') : '',
       is_active: service.is_active,
       category_id: service.category_id || '',
+      image_url: service.image_url || '',
     });
   };
 
