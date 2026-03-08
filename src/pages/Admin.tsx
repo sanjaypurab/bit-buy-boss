@@ -433,6 +433,36 @@ const Admin = () => {
                         {categories.map(c => <option key={c.id} value={c.id}>{c.name}</option>)}
                       </select>
                     </div>
+                    <div>
+                      <Label>Product Image</Label>
+                      <div className="flex items-center gap-3 mt-1">
+                        <Button
+                          type="button"
+                          variant="outline"
+                          className="gap-2"
+                          disabled={uploadingImage}
+                          onClick={() => document.getElementById('new-service-image')?.click()}
+                        >
+                          {uploadingImage ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
+                          Upload Image
+                        </Button>
+                        {(newService as any).image_url && (
+                          <img src={(newService as any).image_url} alt="" className="h-10 w-10 rounded object-cover" />
+                        )}
+                        <input
+                          id="new-service-image"
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={async (e) => {
+                            const file = e.target.files?.[0];
+                            if (!file) return;
+                            const url = await uploadImage(file);
+                            if (url) setNewService({ ...newService, image_url: url } as any);
+                          }}
+                        />
+                      </div>
+                    </div>
                     <Button onClick={addService}>Add Service</Button>
                   </CardContent>
                 </Card>
