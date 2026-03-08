@@ -20,6 +20,7 @@ interface Service {
   btc_address: string | null;
   features: string[];
   category_id: string | null;
+  image_url: string | null;
 }
 
 const ServiceDetail = () => {
