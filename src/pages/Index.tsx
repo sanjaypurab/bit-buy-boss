@@ -24,8 +24,8 @@ const Index = () => {
     },
     {
       icon: Zap,
-      title: 'Instant Delivery',
-      description: 'Services activate the moment your payment is confirmed. No waiting.',
+      title: 'Instant Digital Delivery',
+      description: 'Digital products and services activate the moment your payment confirms on-chain.',
     },
     {
       icon: Lock,
@@ -36,9 +36,9 @@ const Index = () => {
 
   const steps = [
     { step: '01', title: 'Create Account', description: 'Sign up in seconds with just an email.' },
-    { step: '02', title: 'Choose a Service', description: 'Browse our curated catalog of digital tools.' },
-    { step: '03', title: 'Pay with Bitcoin', description: 'Scan the QR code and send your payment.' },
-    { step: '04', title: 'Get Access', description: 'Your service activates after admin confirmation.' },
+    { step: '02', title: 'Browse & Choose', description: 'Explore our catalog of digital products and services.' },
+    { step: '03', title: 'Pay with Bitcoin', description: 'Complete checkout with a single BTC payment.' },
+    { step: '04', title: 'Instant Access', description: 'Your purchase activates automatically after payment confirms.' },
   ];
 
   return (
