@@ -128,8 +128,8 @@ const Services = () => {
       <div className="container mx-auto px-4 py-12 flex-1">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold mb-4">Our Services</h1>
-            <p className="text-xl text-muted-foreground">Choose from our digital offerings</p>
+            <h1 className="text-4xl font-bold mb-4">Products & Services</h1>
+            <p className="text-xl text-muted-foreground">Browse our catalog of digital products and professional services</p>
           </div>
 
           {/* Category filter */}
