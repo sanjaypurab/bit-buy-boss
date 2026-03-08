@@ -111,7 +111,7 @@ const Navbar = () => {
             <SheetContent side="right">
               <SheetHeader>
                 <SheetTitle className="flex items-center gap-2">
-                  <img src="/logo.png" alt="BitBuyBoss logo" className="h-8 w-8" />
+                  <img src="/logo.png" alt="BitBuyBoss logo" className="h-16 w-16" />
                   BitBuyBoss
                 </SheetTitle>
               </SheetHeader>
