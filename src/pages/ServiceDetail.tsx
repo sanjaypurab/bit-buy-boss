@@ -9,6 +9,7 @@ import { useMetaTags } from '@/hooks/useMetaTags';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Loader2, ShoppingCart, Check, ArrowLeft, Share2, Copy } from 'lucide-react';
+import JsonLd from '@/components/JsonLd';
 
 interface Service {
   id: string;
