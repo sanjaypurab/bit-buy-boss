@@ -57,7 +57,7 @@ const ServiceDetail = () => {
   useMetaTags({
     title: service?.name,
     description: service?.description,
-    image: `${window.location.origin}/og-image.png`,
+    image: service?.image_url || `${window.location.origin}/og-image.png`,
     url: window.location.href,
   });
 
