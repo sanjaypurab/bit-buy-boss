@@ -271,6 +271,7 @@ const Admin = () => {
           features,
           is_active: editForm.is_active,
           category_id: editForm.category_id || null,
+          image_url: editForm.image_url || null,
         })
         .eq('id', serviceId);
 
