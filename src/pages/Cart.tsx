@@ -86,7 +86,7 @@ const Cart = () => {
             <Card>
               <CardContent className="text-center py-12">
                 <p className="text-muted-foreground mb-4">Your cart is empty</p>
-                <Button variant="outline" onClick={() => navigate('/services')}>Browse Services</Button>
+                <Button variant="outline" onClick={() => navigate('/services')}>Browse Products & Services</Button>
               </CardContent>
             </Card>
           ) : (

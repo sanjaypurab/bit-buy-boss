@@ -24,8 +24,8 @@ const Index = () => {
     },
     {
       icon: Zap,
-      title: 'Instant Delivery',
-      description: 'Services activate the moment your payment is confirmed. No waiting.',
+      title: 'Instant Digital Delivery',
+      description: 'Digital products and services activate the moment your payment confirms on-chain.',
     },
     {
       icon: Lock,
@@ -36,9 +36,9 @@ const Index = () => {
 
   const steps = [
     { step: '01', title: 'Create Account', description: 'Sign up in seconds with just an email.' },
-    { step: '02', title: 'Choose a Service', description: 'Browse our curated catalog of digital tools.' },
-    { step: '03', title: 'Pay with Bitcoin', description: 'Scan the QR code and send your payment.' },
-    { step: '04', title: 'Get Access', description: 'Your service activates after admin confirmation.' },
+    { step: '02', title: 'Browse & Choose', description: 'Explore our catalog of digital products and services.' },
+    { step: '03', title: 'Pay with Bitcoin', description: 'Complete checkout with a single BTC payment.' },
+    { step: '04', title: 'Instant Access', description: 'Your purchase activates automatically after payment confirms.' },
   ];
 
   return (
@@ -55,7 +55,7 @@ const Index = () => {
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 rounded-full border border-border bg-muted/50 backdrop-blur-sm text-sm font-medium text-muted-foreground">
               <Bitcoin className="h-4 w-4 text-primary" />
-              {c.hero_badge || 'Bitcoin-native digital services'}
+              {c.hero_badge || 'Bitcoin-native digital products & services'}
             </div>
             <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tight mb-6 leading-[1.08]">
               {c.hero_title_line1 || 'Digital services,'}
@@ -64,7 +64,7 @@ const Index = () => {
               </span>
             </h1>
             <p className="text-lg lg:text-xl text-muted-foreground mb-10 max-w-xl mx-auto leading-relaxed">
-              {c.hero_subtitle || 'Premium email marketing, custom websites, and more — all purchasable with Bitcoin. No banks. No middlemen. Just results.'}
+              {c.hero_subtitle || 'Premium digital products and professional services — all purchasable with Bitcoin. No banks. No middlemen. Just results.'}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               {user ? (
@@ -146,8 +146,8 @@ const Index = () => {
             {[
               'No KYC required',
               'BTC-only payments',
-              'Admin-verified orders',
-              'Instant service delivery',
+              'Automated order fulfillment',
+              'Instant digital delivery',
             ].map((item) => (
               <div key={item} className="flex items-center gap-2 text-sm font-medium">
                 <CheckCircle2 className="h-4 w-4 text-primary" />
