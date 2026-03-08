@@ -90,7 +90,7 @@ const Navbar = () => {
     <nav className="border-b bg-card shadow-[var(--shadow-card)]">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 font-bold text-xl">
-          <Shield className="h-6 w-6 text-primary" />
+          <img src="/logo.png" alt="BitBuyBoss logo" className="h-8 w-8" />
           <span>BitBuyBoss</span>
         </Link>
 
@@ -111,7 +111,7 @@ const Navbar = () => {
             <SheetContent side="right">
               <SheetHeader>
                 <SheetTitle className="flex items-center gap-2">
-                  <Shield className="h-5 w-5 text-primary" />
+                  <img src="/logo.png" alt="BitBuyBoss logo" className="h-6 w-6" />
                   BitBuyBoss
                 </SheetTitle>
               </SheetHeader>
