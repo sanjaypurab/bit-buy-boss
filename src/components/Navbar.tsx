@@ -42,7 +42,7 @@ const Navbar = () => {
         <Link to="/services" onClick={close}>
           <Button variant="ghost" className="gap-2 w-full justify-start">
             <ShoppingBag className="h-4 w-4" />
-            Services
+            Products
           </Button>
         </Link>
         <CartButton />

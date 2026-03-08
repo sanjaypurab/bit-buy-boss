@@ -146,8 +146,8 @@ const Index = () => {
             {[
               'No KYC required',
               'BTC-only payments',
-              'Admin-verified orders',
-              'Instant service delivery',
+              'Automated order fulfillment',
+              'Instant digital delivery',
             ].map((item) => (
               <div key={item} className="flex items-center gap-2 text-sm font-medium">
                 <CheckCircle2 className="h-4 w-4 text-primary" />

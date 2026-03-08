@@ -66,8 +66,8 @@ const Auth = () => {
   };
 
   const titles: Record<View, { title: string; desc: string }> = {
-    login: { title: 'Welcome Back', desc: 'Sign in to access your services' },
-    signup: { title: 'Create Account', desc: 'Sign up to start purchasing services' },
+    login: { title: 'Welcome Back', desc: 'Sign in to access your digital products and services' },
+    signup: { title: 'Create Account', desc: 'Sign up to browse and purchase digital products' },
     forgot: { title: 'Reset Password', desc: 'Enter your email to receive a reset link' },
   };
 
