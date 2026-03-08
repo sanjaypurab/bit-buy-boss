@@ -139,7 +139,16 @@ const ServiceDetail = () => {
             <ArrowLeft className="h-4 w-4" /> Back to Services
           </Link>
 
-          <Card className="shadow-[var(--shadow-elevated)]">
+          <Card className="shadow-[var(--shadow-elevated)] overflow-hidden">
+            {service.image_url && (
+              <div className="aspect-video w-full overflow-hidden bg-muted">
+                <img
+                  src={service.image_url}
+                  alt={service.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
             <CardHeader>
               <div className="flex items-start justify-between gap-4">
                 <div>
