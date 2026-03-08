@@ -1,4 +1,4 @@
-# DigiHub — Bitcoin-Native Digital Services Marketplace
+# BitBuyBoss — Bitcoin-Native Digital Services Marketplace
 
 Premium digital services purchasable with Bitcoin. No banks, no middlemen, just results.
 
