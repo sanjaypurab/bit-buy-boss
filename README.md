@@ -2,6 +2,8 @@
 
 Premium digital products and professional services purchasable with Bitcoin. No banks, no middlemen, just results.
 
+🌐 **Live at:** [bitbuyboss.store](https://www.bitbuyboss.store)
+
 ---
 
 ## 📊 Investor Brief
@@ -14,7 +16,7 @@ Premium digital products and professional services purchasable with Bitcoin. No 
 
 **Tech stack advantage:** Built on React + Lovable Cloud with serverless backend functions. Zero infrastructure cost at rest; scales horizontally. The entire platform runs without a traditional backend server.
 
-**Current status:** MVP complete — full payment flow tested end-to-end with live NOWPayments integration. Ready for catalog seeding and soft launch.
+**Current status:** MVP complete — full payment flow tested end-to-end with live NOWPayments integration. Product image uploads, email notifications, and SEO structured data all implemented. Ready for catalog seeding and soft launch.
 
 ---
 
@@ -28,7 +30,7 @@ Premium digital products and professional services purchasable with Bitcoin. No 
 | Tab | What You Can Do |
 |-----|-----------------|
 | **Orders** | View pending orders, confirm payments manually (backup for webhook failures) |
-| **Services** | Add, edit, toggle active/inactive, set USD price, BTC price, features, category |
+| **Services** | Add/edit products with images, toggle active/inactive, set USD price, BTC price, features, category |
 | **Users** | View registered users, manage profiles |
 | **Messages** | Read and respond to user messages |
 | **Categories** | Create/edit service categories with images and sort order |
@@ -39,11 +41,12 @@ Premium digital products and professional services purchasable with Bitcoin. No 
 - The "Confirm Payment" button is a **manual fallback** for edge cases where the webhook fails
 - Orders currently filter to `pending` only in the admin view
 
-### Adding a New Product or Service
+### Adding a New Product
 1. Go to Admin → Services → "Add Service"
 2. Fill in: name, description, USD price (required), BTC price (optional), features (one per line)
-3. Assign a category (optional)
-4. NOWPayments generates unique invoices per order — no manual BTC address needed
+3. **Upload a product image** (stored in `service-images` bucket)
+4. Assign a category (optional)
+5. NOWPayments generates unique invoices per order — no manual BTC address needed
 
 ---
 
@@ -52,11 +55,12 @@ Premium digital products and professional services purchasable with Bitcoin. No 
 ### How to Use BitBuyBoss
 1. **Create an account** at `/auth` with your email and password
 2. **Verify your email** (check inbox for confirmation link)
-3. **Browse products** at `/services` — filter by category
+3. **Browse products** at `/services` — filter by category, view product images
 4. **Add to cart** — digital items are one-per-cart (no duplicates)
 5. **Checkout** — enter your email, optional instructions, agree to Terms & Privacy
 6. **Pay with Bitcoin** — you'll be redirected to a secure NOWPayments page
 7. **Track your order** — visit `/dashboard` to see real-time status updates
+8. **Receive email notifications** — get notified when your order status changes
 
 ### Order Statuses
 | Status | Meaning |
@@ -70,6 +74,7 @@ Premium digital products and professional services purchasable with Bitcoin. No 
 
 ### Features
 - 🔔 **Real-time updates** — dashboard auto-refreshes when payment status changes
+- 📧 **Email notifications** — automated emails on order status changes
 - 💬 **Messaging** — send messages to admins from your dashboard
 - 🔒 **Profile** — change password, view account details at `/profile`
 - 📋 **Order history** — full history with expandable details
@@ -79,52 +84,53 @@ Premium digital products and professional services purchasable with Bitcoin. No 
 
 ## ✅ What We Have (Complete)
 
-| Feature | Notes |
-|---------|-------|
-| **Landing Page** | Hero with dynamic CMS content, How It Works, Features grid, Social Proof, CTA |
-| **Auth System** | Email/password signup, login, email verification, password reset flow |
-| **Role-Based Access** | `user_roles` table with `admin`/`user` enum, `has_role()` security definer function |
-| **Product Catalog** | Dynamic from DB, category filtering, price display, add-to-cart |
-| **Product Detail Pages** | Individual pages per product with full details, share button, JSON-LD |
-| **Categories** | Admin-managed categories with images, sort order |
-| **Shopping Cart** | LocalStorage-persisted, deduplicated, with checkout flow |
-| **Automated BTC Payments** | NOWPayments integration via backend functions (invoice creation + IPN webhook) |
-| **Webhook Verification** | HMAC-SHA512 signature validation, duplicate prevention |
-| **Auto Payout** | USD pricing → BTC payment → USDT TRC20 settlement |
-| **Real-Time Order Tracking** | Realtime subscriptions, live status badges, toast notifications |
-| **User Dashboard** | Order history with payment status, expandable details, messaging tab |
-| **Admin Panel** | 6-tab panel: Orders, Services CRUD, Users, Messages, Categories, Homepage CMS |
-| **CMS / Site Content** | Editable hero, features, CTA text stored in `site_content` table |
-| **User Messaging** | Bidirectional messaging between users and admins |
-| **Profile Management** | Password change, account info display |
-| **Responsive Navbar** | Mobile hamburger menu via Sheet component, cart badge |
-| **SEO & Social Sharing** | OG/Twitter meta tags, JSON-LD structured data, shareable product pages |
-| **Terms & Privacy** | Dedicated pages linked from footer and checkout |
-| **Password Reset** | Full forgot-password → email link → reset flow |
-| **RLS Policies** | All tables secured: orders scoped to user, admin role checks, public read where appropriate |
-| **Footer** | Branding + legal links |
+| Feature | Status | Notes |
+|---------|--------|-------|
+| **Landing Page** | ✅ | Hero with dynamic CMS content, How It Works, Features grid, Social Proof, CTA |
+| **Auth System** | ✅ | Email/password signup, login, email verification, password reset flow |
+| **Role-Based Access** | ✅ | `user_roles` table with `admin`/`user` enum, `has_role()` security definer function |
+| **Product Catalog** | ✅ | Dynamic from DB, category filtering, product images, price display, add-to-cart |
+| **Product Images** | ✅ | Upload via admin panel, stored in `service-images` bucket, displayed in catalog & detail pages |
+| **Product Detail Pages** | ✅ | Individual pages with full details, product image, share button, JSON-LD structured data |
+| **Categories** | ✅ | Admin-managed categories with images, sort order |
+| **Shopping Cart** | ✅ | LocalStorage-persisted, deduplicated, with checkout flow |
+| **Automated BTC Payments** | ✅ | NOWPayments integration via backend functions (invoice creation + IPN webhook) |
+| **Webhook Verification** | ✅ | HMAC-SHA512 signature validation, duplicate prevention |
+| **Auto Payout** | ✅ | USD pricing → BTC payment → USDT TRC20 settlement |
+| **Real-Time Order Tracking** | ✅ | Realtime subscriptions, live status badges, toast notifications |
+| **User Dashboard** | ✅ | Order history with payment status, expandable details, messaging tab |
+| **Admin Panel** | ✅ | 6-tab panel: Orders, Services CRUD with image upload, Users, Messages, Categories, Homepage CMS |
+| **CMS / Site Content** | ✅ | Editable hero, features, CTA text stored in `site_content` table |
+| **User Messaging** | ✅ | Bidirectional messaging between users and admins |
+| **Email Notifications** | ✅ | Branded emails on `bitbuyboss.store` domain for auth and order status changes |
+| **Profile Management** | ✅ | Password change, account info display |
+| **Responsive Navbar** | ✅ | Mobile hamburger menu via Sheet component, cart badge |
+| **SEO & Structured Data** | ✅ | OG/Twitter meta tags, JSON-LD (Product, Offer, ItemList schemas), dynamic `useMetaTags` hook |
+| **Terms & Privacy** | ✅ | Dedicated pages linked from footer and checkout |
+| **Password Reset** | ✅ | Full forgot-password → email link → reset flow |
+| **RLS Policies** | ✅ | All tables secured: orders scoped to user, admin role checks, public read where appropriate |
+| **Storage Bucket** | ✅ | `service-images` with public read, admin-only write/delete policies |
+| **Footer** | ✅ | Branding + legal links |
+| **Custom Domain** | ✅ | Live at bitbuyboss.store |
 
 ---
 
 ## 🚧 What We Need to Launch
 
-### Critical (Blocking)
+### Critical (Blocking Launch)
 
-- [ ] **Seed the catalog** — Database is empty; need at least 3-5 digital products/services for launch
-- [ ] **Custom domain** — Currently on staging URL; need `bitbuyboss.com` connected
-- [ ] **Test full payment flow end-to-end** — Verify NOWPayments invoice → payment → webhook → order status update with real BTC
+- [ ] **Seed the catalog** — Database is empty; need at least 3-5 digital products/services with images
+- [ ] **Test full payment flow end-to-end** — Verify NOWPayments invoice → payment → webhook → order status update → email notification with real BTC
 
 ### Important (Should Have for Launch)
 
 - [ ] **Admin: view all order statuses** — Admin orders tab only shows `pending`; needs tabs/filters for all statuses
 - [ ] **Admin: delete services** — Can edit and deactivate but not delete products
-- [ ] **Email notifications** — No email sent when order status changes (payment confirmed, service activated)
 - [ ] **Order status lifecycle cleanup** — Admin "Confirm Payment" sets `confirmed` but webhook sets `paid`; need consistent mapping
-- [ ] **Error state on legacy Purchase page** — Shows nothing if service has no BTC address (page may be deprecated)
+- [ ] **Error state on legacy Purchase page** — `/purchase` page may be deprecated; consider removing or redirecting
 
 ### Nice to Have (Post-Launch)
 
-- [ ] **Product images** — No image upload/display for products (currently text-only cards)
 - [ ] **Dark/light mode toggle** — Theme tokens exist but no user-facing toggle
 - [ ] **Analytics dashboard** — Order volume, revenue tracking for admins
 - [ ] **Lightning Network** — Faster, cheaper BTC payments
@@ -137,12 +143,12 @@ Premium digital products and professional services purchasable with Bitcoin. No 
 
 ## 🎯 Recommended Next Steps
 
-1. **Seed 3-5 products** into the catalog via Admin panel — at minimum one in each category
-2. **Connect custom domain** via Lovable publish settings
-3. **Run a live test purchase** — end-to-end with real BTC to verify webhook flow
-4. **Add product images** — visual catalog will dramatically improve conversion
-5. **Set up email notifications** — critical for user trust post-purchase
-6. **Expand admin orders view** — show all statuses, not just pending
+1. **Seed 3-5 products** into the catalog via Admin panel — with images, descriptions, and features
+2. **Run a live test purchase** — end-to-end with real BTC to verify the full flow including email notifications
+3. **Expand admin orders view** — add status filter tabs so admins can see all orders, not just pending
+4. **Add delete capability** for services in admin panel
+5. **Remove or redirect `/purchase`** — legacy page superseded by the cart checkout flow
+6. **Set up analytics** — track order volume and revenue in admin dashboard
 
 ---
 
@@ -151,78 +157,31 @@ Premium digital products and professional services purchasable with Bitcoin. No 
 | Layer | Technology |
 |-------|-----------|
 | **Frontend** | React 18, TypeScript, Vite, Tailwind CSS, shadcn/ui |
-| **Backend** | Lovable Cloud — Auth, Postgres, RLS, Backend Functions |
+| **Backend** | Lovable Cloud — Auth, Postgres, RLS, Backend Functions, Storage |
 | **Payments** | NOWPayments API (invoice creation, IPN webhooks, USDT TRC20 payout) |
 | **State** | React Query, React Context (Auth, Cart), localStorage (cart persistence) |
 | **Realtime** | Realtime subscriptions (order status updates) |
-| **SEO** | JSON-LD structured data, OG/Twitter meta tags, dynamic useMetaTags hook |
-
-## Project Structure
-
-```
-src/
-├── components/
-│   ├── Navbar.tsx           # Responsive nav with mobile Sheet menu
-│   ├── Footer.tsx           # Site-wide footer
-│   ├── JsonLd.tsx           # Reusable JSON-LD structured data component
-│   ├── UserMessages.tsx     # User messaging interface
-│   ├── admin/               # Admin panel tab components
-│   │   ├── AdminCategoriesTab.tsx
-│   │   ├── AdminContentTab.tsx
-│   │   ├── AdminMessagesTab.tsx
-│   │   └── AdminUsersTab.tsx
-│   ├── dashboard/
-│   │   └── OrderCard.tsx    # Order display with status badges
-│   └── ui/                  # shadcn/ui primitives
-├── contexts/
-│   ├── AuthContext.tsx       # Auth state, admin check, sign in/up/out
-│   └── CartContext.tsx       # Cart state with localStorage persistence
-├── hooks/
-│   ├── use-toast.ts
-│   ├── use-mobile.tsx
-│   ├── useMetaTags.ts       # Dynamic OG/Twitter meta tag management
-│   └── useSiteContent.ts    # CMS content fetcher
-├── integrations/
-│   └── supabase/
-│       ├── client.ts        # Auto-generated client
-│       └── types.ts         # Auto-generated DB types
-├── pages/
-│   ├── Index.tsx            # Landing page with CMS-driven content
-│   ├── Auth.tsx             # Login / Signup / Forgot password
-│   ├── ResetPassword.tsx    # Password reset handler
-│   ├── Services.tsx         # Product catalog with category filter
-│   ├── ServiceDetail.tsx    # Individual product page with JSON-LD
-│   ├── Cart.tsx             # Cart + checkout → NOWPayments redirect
-│   ├── Purchase.tsx         # Legacy single-service purchase (deprecated)
-│   ├── Dashboard.tsx        # User orders + messages (realtime)
-│   ├── Profile.tsx          # Account settings, password change
-│   ├── Admin.tsx            # Admin panel (6 tabs)
-│   ├── TermsOfService.tsx   # Terms page
-│   ├── PrivacyPolicy.tsx    # Privacy page
-│   └── NotFound.tsx         # 404
-└── lib/
-    └── utils.ts             # Tailwind merge utility
-
-supabase/
-├── config.toml              # Project config
-└── functions/
-    ├── create-payment/      # Backend Function: creates NOWPayments invoice
-    │   └── index.ts
-    └── payment-webhook/     # Backend Function: IPN handler with HMAC verification
-        └── index.ts
-```
+| **SEO** | JSON-LD structured data (Product, Offer, ItemList), OG/Twitter meta tags, dynamic useMetaTags hook |
+| **Email** | Branded email notifications via bitbuyboss.store domain |
+| **Storage** | service-images bucket with public read, admin-managed uploads |
 
 ## Database Schema
 
 | Table | Purpose | RLS |
 |-------|---------|-----|
-| `services` | Product catalog (name, price, BTC price, features, category, active toggle) | Public read (active only), admin CRUD |
+| `services` | Product catalog (name, price, BTC price, features, category, image_url, active toggle) | Public read (active only), admin CRUD |
 | `categories` | Product categories (name, image, sort order) | Public read, admin CRUD |
 | `orders` | Purchase records (user, service, payment status, BTC amount, instructions) | User read own, admin read/update all |
 | `profiles` | User profiles (email, banned flag) | User read own, admin full access |
 | `messages` | User ↔ admin messaging (subject, body, read status) | Scoped to sender/recipient |
 | `site_content` | CMS key-value pairs for homepage content | Public read, admin CRUD |
 | `user_roles` | Role assignments (admin/user enum) | User read own, admin read all |
+
+## Storage Buckets
+
+| Bucket | Purpose | Access |
+|--------|---------|--------|
+| `service-images` | Product thumbnails and images | Public read, admin upload/update/delete |
 
 ## Getting Started
 
