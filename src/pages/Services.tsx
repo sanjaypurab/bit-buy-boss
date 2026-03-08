@@ -184,7 +184,7 @@ const Services = () => {
                         </div>
                       </Link>
                     )}
-                      <div className="flex items-start justify-between gap-2">
+                    <CardHeader>
                         <Link to={`/services/${service.id}`} className="hover:underline">
                           <CardTitle>{service.name}</CardTitle>
                         </Link>
