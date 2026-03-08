@@ -37,7 +37,7 @@ const TermsOfService = () => {
 
           <section>
             <h2 className="text-xl font-semibold mb-2">6. Limitation of Liability</h2>
-            <p className="text-muted-foreground">DigiHub is provided "as is" without warranties. We are not liable for any indirect, incidental, or consequential damages arising from your use of the Service.</p>
+            <p className="text-muted-foreground">BitBuyBoss is provided "as is" without warranties. We are not liable for any indirect, incidental, or consequential damages arising from your use of the Service.</p>
           </section>
 
           <section>
