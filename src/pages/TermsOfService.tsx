@@ -12,12 +12,12 @@ const TermsOfService = () => {
         <div className="prose prose-sm max-w-none space-y-6 text-foreground">
           <section>
             <h2 className="text-xl font-semibold mb-2">1. Acceptance of Terms</h2>
-            <p className="text-muted-foreground">By accessing or using DigiHub ("Service"), you agree to be bound by these Terms of Service. If you do not agree, do not use the Service.</p>
+            <p className="text-muted-foreground">By accessing or using BitBuyBoss ("Service"), you agree to be bound by these Terms of Service. If you do not agree, do not use the Service.</p>
           </section>
 
           <section>
             <h2 className="text-xl font-semibold mb-2">2. Services</h2>
-            <p className="text-muted-foreground">DigiHub provides digital services available for purchase via cryptocurrency (Bitcoin). All services are delivered digitally and are subject to availability.</p>
+            <p className="text-muted-foreground">BitBuyBoss provides digital services available for purchase via cryptocurrency (Bitcoin). All services are delivered digitally and are subject to availability.</p>
           </section>
 
           <section>
@@ -37,7 +37,7 @@ const TermsOfService = () => {
 
           <section>
             <h2 className="text-xl font-semibold mb-2">6. Limitation of Liability</h2>
-            <p className="text-muted-foreground">DigiHub is provided "as is" without warranties. We are not liable for any indirect, incidental, or consequential damages arising from your use of the Service.</p>
+            <p className="text-muted-foreground">BitBuyBoss is provided "as is" without warranties. We are not liable for any indirect, incidental, or consequential damages arising from your use of the Service.</p>
           </section>
 
           <section>

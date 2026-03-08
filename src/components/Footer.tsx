@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="container mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
         <div className="flex items-center gap-2">
           <Shield className="h-4 w-4 text-primary" />
-          <span>&copy; {new Date().getFullYear()} DigiHub</span>
+          <span>&copy; {new Date().getFullYear()} BitBuyBoss</span>
         </div>
         <div className="flex items-center gap-4">
           <Link to="/terms" className="hover:text-foreground transition-colors">
