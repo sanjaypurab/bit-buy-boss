@@ -106,6 +106,24 @@ const Services = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      <JsonLd data={{
+        '@context': 'https://schema.org',
+        '@type': 'ItemList',
+        name: 'BitBuyBoss Services',
+        url: window.location.href,
+        numberOfItems: filteredServices.length,
+        itemListElement: filteredServices.map((s, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          item: {
+            '@type': 'Product',
+            name: s.name,
+            description: s.description,
+            url: `${window.location.origin}/services/${s.id}`,
+            offers: { '@type': 'Offer', price: s.price, priceCurrency: 'USD', availability: 'https://schema.org/InStock' },
+          },
+        })),
+      }} />
       <Navbar />
       <div className="container mx-auto px-4 py-12 flex-1">
         <div className="max-w-6xl mx-auto">
