@@ -185,30 +185,22 @@ const Admin = () => {
     }
   };
 
-  const confirmPayment = async (orderId: string) => {
+  const updateOrderStatus = async (orderId: string, newStatus: string) => {
     try {
-      const { error } = await supabase
-        .from('orders')
-        .update({
-          status: 'confirmed',
-          payment_confirmed_at: new Date().toISOString(),
-          payment_confirmed_by: user?.id,
-        })
-        .eq('id', orderId);
-
+      const updateData: Record<string, unknown> = {
+        status: newStatus,
+        payment_status: newStatus,
+      };
+      if (newStatus === 'paid' || newStatus === 'confirmed') {
+        updateData.payment_confirmed_at = new Date().toISOString();
+        updateData.payment_confirmed_by = user?.id;
+      }
+      const { error } = await supabase.from('orders').update(updateData).eq('id', orderId);
       if (error) throw error;
-      
-      toast({
-        title: 'Success',
-        description: 'Payment confirmed',
-      });
+      toast({ title: 'Success', description: `Order marked as ${newStatus}` });
       fetchOrders();
     } catch (error: any) {
-      toast({
-        title: 'Error',
-        description: error.message,
-        variant: 'destructive',
-      });
+      toast({ title: 'Error', description: error.message, variant: 'destructive' });
     }
   };
 
