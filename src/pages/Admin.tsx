@@ -330,7 +330,7 @@ const Admin = () => {
 
             <TabsContent value="orders" className="space-y-4">
               <div className="flex flex-wrap gap-2">
-                {['all', 'pending', 'confirmed', 'completed', 'cancelled'].map((status) => {
+                {['all', 'pending', 'confirming', 'paid', 'confirmed', 'completed', 'cancelled', 'expired', 'failed'].map((status) => {
                   const count = status === 'all' ? orders.length : orders.filter(o => o.status === status).length;
                   return (
                     <Button
