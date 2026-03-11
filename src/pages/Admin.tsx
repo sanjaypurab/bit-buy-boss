@@ -359,9 +359,11 @@ const Admin = () => {
                   );
                 }
                 return filtered.map((order) => {
-                  const statusColor = order.status === 'confirmed' ? 'bg-success text-success-foreground'
+                  const statusColor = 
+                    order.status === 'paid' || order.status === 'confirmed' ? 'bg-success text-success-foreground'
                     : order.status === 'completed' ? 'bg-primary text-primary-foreground'
-                    : order.status === 'cancelled' ? 'bg-destructive text-destructive-foreground'
+                    : order.status === 'confirming' ? 'bg-accent text-accent-foreground'
+                    : order.status === 'cancelled' || order.status === 'failed' || order.status === 'expired' ? 'bg-destructive text-destructive-foreground'
                     : 'bg-warning text-warning-foreground';
                   return (
                     <Card key={order.id}>
@@ -390,11 +392,23 @@ const Admin = () => {
                           <div className="text-xs font-mono text-muted-foreground">
                             ID: {order.id.slice(0, 8)}…{order.id.slice(-4)}
                           </div>
-                          {order.status === 'pending' && (
-                            <Button onClick={() => confirmPayment(order.id)}>
-                              Confirm Payment
-                            </Button>
-                          )}
+                          <div className="flex flex-wrap gap-2">
+                            {(order.status === 'pending' || order.status === 'confirming') && (
+                              <Button size="sm" onClick={() => updateOrderStatus(order.id, 'paid')}>
+                                Confirm Payment
+                              </Button>
+                            )}
+                            {order.status === 'paid' && (
+                              <Button size="sm" onClick={() => updateOrderStatus(order.id, 'completed')}>
+                                Mark Completed
+                              </Button>
+                            )}
+                            {order.status !== 'cancelled' && order.status !== 'completed' && order.status !== 'failed' && order.status !== 'expired' && (
+                              <Button size="sm" variant="destructive" onClick={() => updateOrderStatus(order.id, 'cancelled')}>
+                                Cancel
+                              </Button>
+                            )}
+                          </div>
                         </div>
                       </CardContent>
                     </Card>
