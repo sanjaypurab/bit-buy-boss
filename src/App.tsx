@@ -17,6 +17,7 @@ import Admin from "./pages/Admin";
 import TermsOfService from "./pages/TermsOfService";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import NotFound from "./pages/NotFound";
+import { Navigate } from "react-router-dom";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +41,8 @@ const App = () => (
               <Route path="/admin" element={<Admin />} />
               <Route path="/terms" element={<TermsOfService />} />
               <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/purchase" element={<Navigate to="/services" replace />} />
+              <Route path="/purchase/:serviceId" element={<Navigate to="/services" replace />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
