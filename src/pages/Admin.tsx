@@ -36,6 +36,7 @@ interface Order {
   btc_amount: number | null;
   services: {
     name: string;
+    price: number;
   };
   user_id: string;
   user_email?: string | null;
