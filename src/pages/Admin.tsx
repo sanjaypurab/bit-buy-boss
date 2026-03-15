@@ -321,8 +321,9 @@ const Admin = () => {
         <div className="max-w-7xl mx-auto">
           <h1 className="text-4xl font-bold mb-8">Admin Panel</h1>
 
-          <Tabs defaultValue="orders" className="space-y-6">
-            <TabsList>
+          <Tabs defaultValue="analytics" className="space-y-6">
+            <TabsList className="flex-wrap">
+              <TabsTrigger value="analytics">Analytics</TabsTrigger>
               <TabsTrigger value="orders">Orders</TabsTrigger>
               <TabsTrigger value="services">Services</TabsTrigger>
               <TabsTrigger value="users">Users</TabsTrigger>
@@ -330,6 +331,19 @@ const Admin = () => {
               <TabsTrigger value="categories">Categories</TabsTrigger>
               <TabsTrigger value="content">Homepage</TabsTrigger>
             </TabsList>
+
+            <TabsContent value="analytics">
+              <AdminAnalyticsTab
+                orders={orders.map(o => ({
+                  id: o.id,
+                  status: o.status,
+                  created_at: o.created_at,
+                  btc_amount: o.btc_amount,
+                  service_price: o.services?.price || 0,
+                  service_name: o.services?.name || 'Unknown',
+                }))}
+              />
+            </TabsContent>
 
             <TabsContent value="orders" className="space-y-4">
               <div className="flex flex-wrap gap-2">
