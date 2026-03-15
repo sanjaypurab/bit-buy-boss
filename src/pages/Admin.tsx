@@ -27,6 +27,7 @@ import AdminUsersTab from '@/components/admin/AdminUsersTab';
 import AdminMessagesTab from '@/components/admin/AdminMessagesTab';
 import AdminContentTab from '@/components/admin/AdminContentTab';
 import AdminCategoriesTab from '@/components/admin/AdminCategoriesTab';
+import AdminAnalyticsTab from '@/components/admin/AdminAnalyticsTab';
 
 interface Order {
   id: string;
