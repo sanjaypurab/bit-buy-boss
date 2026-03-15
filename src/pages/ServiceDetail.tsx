@@ -54,11 +54,15 @@ const ServiceDetail = () => {
     fetch();
   }, [id]);
 
+  const serviceImageAbsolute = service?.image_url
+    ? (service.image_url.startsWith('http') ? service.image_url : `${window.location.origin}${service.image_url}`)
+    : `https://www.bitbuyboss.store/og-image.png`;
+
   useMetaTags({
     title: service?.name,
     description: service?.description,
-    image: service?.image_url || `${window.location.origin}/og-image.png`,
-    url: window.location.href,
+    image: serviceImageAbsolute,
+    url: `https://www.bitbuyboss.store/services/${id}`,
   });
 
   const serviceJsonLd = service ? {
