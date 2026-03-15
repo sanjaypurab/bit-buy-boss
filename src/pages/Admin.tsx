@@ -138,7 +138,8 @@ const Admin = () => {
           btc_amount,
           user_id,
           services (
-            name
+            name,
+            price
           )
         `)
         .order('created_at', { ascending: false });
