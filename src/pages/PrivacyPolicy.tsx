@@ -1,7 +1,15 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { useMetaTags } from '@/hooks/useMetaTags';
 
 const PrivacyPolicy = () => {
+  useMetaTags({
+    title: 'Privacy Policy',
+    description: 'How BitBuyBoss collects, uses, and protects your data. Privacy-first, no tracking, minimal data retention for our Bitcoin marketplace.',
+    url: 'https://www.bitbuyboss.store/privacy',
+    canonical: 'https://www.bitbuyboss.store/privacy',
+  });
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
