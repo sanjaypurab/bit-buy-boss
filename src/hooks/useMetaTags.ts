@@ -5,9 +5,10 @@ interface MetaTagsOptions {
   description?: string;
   image?: string;
   url?: string;
+  canonical?: string;
 }
 
-export const useMetaTags = ({ title, description, image, url }: MetaTagsOptions) => {
+export const useMetaTags = ({ title, description, image, url, canonical }: MetaTagsOptions) => {
   useEffect(() => {
     const originalTitle = document.title;
     const setMeta = (property: string, content: string) => {
@@ -19,6 +20,16 @@ export const useMetaTags = ({ title, description, image, url }: MetaTagsOptions)
         document.head.appendChild(el);
       }
       el.setAttribute('content', content);
+    };
+
+    const setCanonical = (href: string) => {
+      let el = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+      if (!el) {
+        el = document.createElement('link');
+        el.setAttribute('rel', 'canonical');
+        document.head.appendChild(el);
+      }
+      el.setAttribute('href', href);
     };
 
     if (title) {
@@ -38,9 +49,12 @@ export const useMetaTags = ({ title, description, image, url }: MetaTagsOptions)
     if (url) {
       setMeta('og:url', url);
     }
+    if (canonical) {
+      setCanonical(canonical);
+    }
 
     return () => {
       document.title = originalTitle;
     };
-  }, [title, description, image, url]);
+  }, [title, description, image, url, canonical]);
 };
