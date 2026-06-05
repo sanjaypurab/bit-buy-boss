@@ -9,6 +9,8 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Loader2, ShoppingCart, Check, ImageIcon, Share2 } from 'lucide-react';
 import JsonLd from '@/components/JsonLd';
+import { useMetaTags } from '@/hooks/useMetaTags';
+
 
 interface Category {
   id: string;
@@ -35,6 +37,14 @@ const Services = () => {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const { toast } = useToast();
   const { items, addItem } = useCart();
+
+  useMetaTags({
+    title: 'Browse Digital Products & Services',
+    description: 'Explore the BitBuyBoss catalog of digital products and professional services. Pay with Bitcoin, get instant delivery, no KYC required.',
+    url: 'https://www.bitbuyboss.store/services',
+    canonical: 'https://www.bitbuyboss.store/services',
+  });
+
 
   useEffect(() => {
     Promise.all([fetchServices(), fetchCategories()]).then(() => setLoading(false));
@@ -126,12 +136,14 @@ const Services = () => {
         })),
       }} />
       <Navbar />
-      <div className="container mx-auto px-4 py-12 flex-1">
+      <main className="container mx-auto px-4 py-12 flex-1">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold mb-4">Products & Services</h1>
             <p className="text-xl text-muted-foreground">Browse our catalog of digital products and professional services</p>
           </div>
+          <h2 className="sr-only">Our Catalog</h2>
+
 
           {/* Category filter */}
           {categories.length > 0 && (
@@ -203,9 +215,11 @@ const Services = () => {
                             }
                           }}
                           title="Share"
+                          aria-label={`Share ${service.name}`}
                         >
                           <Share2 className="h-4 w-4" />
                         </Button>
+
                       </div>
                       <CardDescription>{service.description}</CardDescription>
                     </CardHeader>
@@ -242,8 +256,9 @@ const Services = () => {
             </div>
           )}
         </div>
-      </div>
+      </main>
       <Footer />
+
     </div>
   );
 };
