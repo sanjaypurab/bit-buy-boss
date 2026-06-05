@@ -63,7 +63,9 @@ const ServiceDetail = () => {
     description: service?.description,
     image: serviceImageAbsolute,
     url: `https://www.bitbuyboss.store/services/${id}`,
+    canonical: `https://www.bitbuyboss.store/services/${id}`,
   });
+
 
   const serviceJsonLd = service ? {
     '@context': 'https://schema.org',
@@ -137,12 +139,13 @@ const ServiceDetail = () => {
     <div className="min-h-screen bg-background flex flex-col">
       {serviceJsonLd && <JsonLd data={serviceJsonLd} />}
       <Navbar />
-      <div className="container mx-auto px-4 py-12 flex-1">
+      <main className="container mx-auto px-4 py-12 flex-1">
         <div className="max-w-2xl mx-auto">
           <Link to="/services" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors">
             <ArrowLeft className="h-4 w-4" /> Back to Services
           </Link>
 
+          <h1 className="sr-only">{service.name}</h1>
           <Card className="shadow-[var(--shadow-elevated)] overflow-hidden">
             {service.image_url && (
               <div className="aspect-video w-full overflow-hidden bg-muted">
@@ -153,15 +156,17 @@ const ServiceDetail = () => {
                 />
               </div>
             )}
+
             <CardHeader>
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <CardTitle className="text-2xl">{service.name}</CardTitle>
                   <CardDescription className="mt-2 text-base">{service.description}</CardDescription>
                 </div>
-                <Button variant="outline" size="icon" onClick={handleShare} title="Share">
+                <Button variant="outline" size="icon" onClick={handleShare} title="Share" aria-label={`Share ${service.name}`}>
                   <Share2 className="h-4 w-4" />
                 </Button>
+
               </div>
             </CardHeader>
             <CardContent>
@@ -196,7 +201,8 @@ const ServiceDetail = () => {
             </CardFooter>
           </Card>
         </div>
-      </div>
+      </main>
+
       <Footer />
     </div>
   );

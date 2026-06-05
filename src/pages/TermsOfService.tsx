@@ -1,7 +1,15 @@
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { useMetaTags } from '@/hooks/useMetaTags';
 
 const TermsOfService = () => {
+  useMetaTags({
+    title: 'Terms of Service',
+    description: 'Read the BitBuyBoss Terms of Service governing use of our Bitcoin-native digital products and services marketplace.',
+    url: 'https://www.bitbuyboss.store/terms',
+    canonical: 'https://www.bitbuyboss.store/terms',
+  });
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Navbar />

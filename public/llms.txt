@@ -1,0 +1,13 @@
+# BitBuyBoss
+
+> Marketplace for premium digital products and professional services, paid with Bitcoin. No KYC, instant delivery, total privacy.
+
+BitBuyBoss is a Bitcoin-native e-commerce platform offering digital products and services with on-chain BTC payments, automated order fulfillment, and instant digital delivery.
+
+## Pages
+
+- [Home](/): Overview of the BitBuyBoss platform and value proposition.
+- [Services](/services): Browse the catalog of digital products and services available for Bitcoin.
+- [Sign In / Sign Up](/auth): Create an account or sign in.
+- [Terms of Service](/terms): Terms governing use of the platform.
+- [Privacy Policy](/privacy): How user data is collected, stored, and protected.
