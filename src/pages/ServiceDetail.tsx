@@ -201,7 +201,8 @@ const ServiceDetail = () => {
             </CardFooter>
           </Card>
         </div>
-      </div>
+      </main>
+
       <Footer />
     </div>
   );
