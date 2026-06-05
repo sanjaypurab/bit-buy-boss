@@ -5,6 +5,8 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Shield, Zap, Lock, Bitcoin, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { useSiteContent } from '@/hooks/useSiteContent';
+import JsonLd from '@/components/JsonLd';
+
 
 const Index = () => {
   const { user } = useAuth();
@@ -43,7 +45,28 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background dark">
+      <JsonLd data={{
+        '@context': 'https://schema.org',
+        '@graph': [
+          {
+            '@type': 'Organization',
+            '@id': 'https://www.bitbuyboss.store/#organization',
+            name: 'BitBuyBoss',
+            url: 'https://www.bitbuyboss.store',
+            logo: 'https://www.bitbuyboss.store/logo.png',
+          },
+          {
+            '@type': 'WebSite',
+            '@id': 'https://www.bitbuyboss.store/#website',
+            url: 'https://www.bitbuyboss.store',
+            name: 'BitBuyBoss',
+            publisher: { '@id': 'https://www.bitbuyboss.store/#organization' },
+          },
+        ],
+      }} />
       <Navbar />
+      <main>
+
 
       {/* Hero Section */}
       <section className="relative overflow-hidden border-b border-border">
