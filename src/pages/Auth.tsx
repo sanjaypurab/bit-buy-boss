@@ -78,14 +78,17 @@ const Auth = () => {
           <ArrowLeft className="h-4 w-4" /> Back to home
         </Link>
       </div>
-      <Card className="w-full max-w-md shadow-[var(--shadow-elevated)]">
-        <CardHeader className="space-y-1 text-center">
-          <div className="mx-auto mb-4 h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
-            <Shield className="h-6 w-6 text-primary" />
-          </div>
-          <CardTitle className="text-2xl font-bold">{titles[view].title}</CardTitle>
-          <CardDescription>{titles[view].desc}</CardDescription>
-        </CardHeader>
+      <main className="w-full max-w-md">
+        <h1 className="sr-only">{titles[view].title}</h1>
+        <Card className="w-full shadow-[var(--shadow-elevated)]">
+          <CardHeader className="space-y-1 text-center">
+            <div className="mx-auto mb-4 h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
+              <Shield className="h-6 w-6 text-primary" />
+            </div>
+            <CardTitle className="text-2xl font-bold">{titles[view].title}</CardTitle>
+            <CardDescription>{titles[view].desc}</CardDescription>
+          </CardHeader>
+
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
